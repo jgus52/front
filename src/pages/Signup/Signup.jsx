@@ -108,7 +108,6 @@ const Signup = ({history}) => {
                         <p className="id-password-desc">학교 이메일</p>
                         <div className="signup-email-container">
                             <input 
-                                placeholder="@uos.ac.kr"
                                 type="text"
                                 value={email}
                                 spellCheck={false}

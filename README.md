@@ -1,2 +1,0 @@
-# front
-UOSVOTE-FRONT
