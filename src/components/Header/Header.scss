@@ -1,0 +1,25 @@
+.header-component{
+    font-weight: bold;
+    background-color: #06287F;
+    height: 86px;
+    padding: 21px 0px 23px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .button-container{
+        background-color: #ffffff;
+        margin-right: 32px;
+        border-radius: 22px;
+        padding: 8px 18px 9px 18px;
+    }
+
+    .button-container2{
+        background-color:  #06287F;
+        margin-right: 32px;
+        border-radius: 22px;
+        padding: 8px 18px 9px 18px;
+    }
+
+
+} 

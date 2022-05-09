@@ -1,0 +1,20 @@
+.block-container{
+    background-color: #ffffff;
+    max-width: 100%;
+    padding: 111px;
+    transition: 0.2s ease-in-out;
+    animation: 1s show ease-in-out;
+    display: block;
+}
+
+  @keyframes show {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
