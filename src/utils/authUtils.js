@@ -4,8 +4,8 @@ export const checkEmailValidation = (userInput) => {
 }
     
 export const checkStudentIDValidation = (userInput) => {
-    const usernameCheckRegex = /\d{4}\92\d{4}/
-    return (userInput && !usernameCheckRegex.test(userInput))
+    const StudentIDCheckRegex = /\d{4}\92\d{4}/
+    return (userInput && StudentIDCheckRegex.test(userInput))
 }
 
 export const checkPasswordValidation = (passwordInput) => {

@@ -5,6 +5,7 @@ import Button from "../../components/Button/Button";
 import Modal from "../../components/Modal/Modal";
 import { checkEmailValidation, checkPasswordValidation, checkStudentIDValidation } from '../../utils/authUtils'
 import { signup, resetErrorSuccess } from "../../store/actions/userActions";
+import * as bcrypt from 'bcryptjs';
 import './Signup.scss'
 
 const Signup = ({history}) => {
@@ -13,6 +14,7 @@ const Signup = ({history}) => {
     const [studentID, setStudentID] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [hashpassword, sethashpassword] = useState('')
     const [confirmPassword, setconfirmPassword] = useState('')
     const [formError, setFormError] = useState('')
     const [modalOpen, setModalOpen] = useState('close')
@@ -23,13 +25,19 @@ const Signup = ({history}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        sethashpassword(bcrypt.hash(password, 10));
+        console.log(hashpassword);
+        sethashpassword(bcrypt.hash(confirmPassword, 10));
+        console.log(hashpassword);
+
         setModalOpen('open')
-        if(!checkEmailValidation(email)) {
-            setFormError("올바른 이메일 형식이 아닙니다")
+        if(!checkStudentIDValidation(studentID)) {
+            setFormError("올바른 학번 형식이 아닙니다")
             return
         }
-        if(!checkStudentIDValidation(username)) {
-            setFormError("올바른 학번 형식이 아닙니다")
+        if(!checkEmailValidation(email)) {
+            setFormError("올바른 이메일 형식이 아닙니다")
             return
         }
         if(!checkPasswordValidation(password)){
@@ -40,12 +48,12 @@ const Signup = ({history}) => {
           setFormError("비밀번호와 비밀번호 확인값이. 일치하지 않습니다")
           return
         }
-    
+
         const submittedUserData = {
             studentName: username,
             studentID: studentID,
             email: email,
-            password,
+            password: hashpassword,
         }
     
         dispatch(signup(submittedUserData))
@@ -146,6 +154,7 @@ const Signup = ({history}) => {
                 
                         <div className="signup-button">
                             <Button 
+                    
                                 type={(modalOpen==="open" || formError)? "" : "submit"}
                                 text="가입하기" 
                                 size="18px" 

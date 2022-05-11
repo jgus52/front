@@ -12,7 +12,7 @@ export const signup = (submittedUserData) => async (dispatch) => {
         body:JSON.stringify(submittedUserData)
       }
 
-      const res = await fetch(`/signup`, config)
+      const res = await fetch(`auth/signup`, config)
 
       if(res.status === 200) {
         dispatch({
@@ -50,7 +50,7 @@ export const login = (submittedUserData) => async (dispatch) => {
       body:JSON.stringify(submittedUserData)
     }
 
-    const res = await fetch(`users/login`, config)
+    const res = await fetch(`auth/login`, config)
 
     if(res.status === 200) {
       dispatch({
