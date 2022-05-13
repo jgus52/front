@@ -1,0 +1,62 @@
+.login-container{
+    display: flex;
+
+    .block-container{
+        width: fit-content;
+        margin: 100px auto;
+
+        .login-desc{
+            color: #000000;
+            font-size: 34px;
+            font-weight: bold;
+            text-align: center;
+            padding: 0px 0px 33px 0px;
+        }
+
+        .id-password-desc{
+            color: #808080;
+            font-size: 15px;
+        }
+
+        input{
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #000000;
+            margin: 10px 0px 12px 0px;
+            width: 370px;
+            font-size: 18px;
+        }
+
+        input::placeholder {
+            text-align: right;
+        }
+
+        .login-button{
+            display: flex;
+            justify-content: center;
+
+            .button-container{
+                margin-top: 28px;
+                background-color: #06287F;
+                border-radius: 40px;
+                width: 370px;
+                height: 40px;
+            }
+        }
+
+        .login-needsignup-container{
+            font-size: 16px;
+            padding: 30px 0px 0px 0px;
+            text-align: center;
+
+            .button-container{
+                background-color: transparent;
+                margin-top: 21px;
+                margin-left: 5px;
+                font-weight: bold;
+                text-decoration: underline;
+            }
+        }
+    }
+
+} 

@@ -1,0 +1,87 @@
+.signup-container{
+    display: flex;
+
+    .block-container{
+        width: fit-content;
+        margin: 25px auto;
+
+        .signup-desc{
+            color: #000000;
+            font-size: 34px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 23px;
+        }
+
+        .signup-email-container{
+            display: flex;
+            justify-content: space-between;
+
+            input{
+                background-color: transparent;
+                border: none;
+                border-bottom: 1px solid #000000;
+                margin: 10px 0px 20px;
+                width: 248px;
+            }
+
+            .button-container{
+                margin-bottom: 22px;
+                background-color: #06287F;
+                border-radius: 10px;
+                width: 114px;
+                height: 36px;
+            }
+        }
+
+        .signup-CertificationNumber-container{
+            display: flex;
+            justify-content: space-between;
+
+            input{
+                background-color: transparent;
+                border: none;
+                border-bottom: 1px solid #000000;
+                margin: 10px 0px 20px;
+                width: 197px;
+            }
+
+            .button-container{
+                margin-bottom: 22px;
+                background-color: #06287F;
+                border-radius: 10px;
+                width: 70px;
+                height: 36px;
+            }
+        }
+
+        input{
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #000000;
+            margin: 10px 0px 20px;
+            width: 370px;
+            font-size: 16px;
+        }
+
+        .id-password-desc{
+            color: #808080;
+            font-size: 18px;
+        }
+
+        .signup-button{
+            display: flex;
+            justify-content: center;
+
+            .button-container{
+                margin-top: 9px;
+                background-color: #06287F;
+                border-radius: 10px;
+                width: 370px;
+                height: 40px;
+            }
+        }
+
+    }
+
+} 

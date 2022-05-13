@@ -1,0 +1,13 @@
+.main-page{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 52px;
+
+    .conceptimage{
+        .concept{
+            width: 1450px;
+            height: 750px;;
+        }
+    }
+}
