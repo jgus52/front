@@ -41,15 +41,17 @@ const Signup = ({history}) => {
         dispatch(resetcertificationNumberCheck())
     }
 
-    const makeHash = async (password) => {
-        sethashpassword(await bcrypt.hash(password, 10))
+    const makeHash = async(password) => {
+        return await bcrypt.hash(password, 10)
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        makeHash(password);
+
+        const hashpassword = await makeHash(password);
         console.log(hashpassword);
+
 
         setModalOpen('open')
         if(!checkStudentIDValidation(studentID)) {

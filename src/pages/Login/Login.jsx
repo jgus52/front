@@ -12,21 +12,21 @@ import './Login.scss'
 const Login = ({history}) => {
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
-    const [hashpassword, sethashpassword] = useState('')
+    // const [hashpassword, sethashpassword] = useState('')
     const [modalOpen, setModalOpen] = useState('')
     const [formError, setFormError] = useState('')
 
     const dispatch = useDispatch()
     const { loading, success, error } = useSelector(state=>state.user)
 
-    const makeHash = async (password) => {
-        sethashpassword(await bcrypt.hash(password, 10))
+    const makeHash = async(password) => {
+        return await bcrypt.hash(password, 10)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault()
 
-        makeHash(password);
+        const hashpassword = await makeHash(password);
         console.log(hashpassword);
 
         setModalOpen('open')

@@ -12,7 +12,7 @@ export const signup = (submittedUserData) => async (dispatch) => {
         body:JSON.stringify(submittedUserData)
       }
 
-      const res = await fetch(`auth/register`, config)
+      const res = await fetch(`http://localhost:3001/auth/register`, config)
 
       if(res.status === 200) {
         dispatch({
@@ -49,7 +49,7 @@ export const usersendmail= (email) => async (dispatch) => {
       body:JSON.stringify({email})
     }
 
-    const res = await fetch(`auth/sendmail`, config)
+    const res = await fetch(`http://localhost:3001/auth/sendmail`, config)
 
     if(res.status === 200) {
       dispatch({
@@ -85,7 +85,7 @@ export const usercertification = (submittednumber) => async (dispatch) => {
       body:JSON.stringify(submittednumber)
     }
 
-    const res = await fetch(`auth/certification`, config)
+    const res = await fetch(`http://localhost:3001/auth/certification`, config)
 
     if(res.status === 200) {
       dispatch({
@@ -122,7 +122,7 @@ export const login = (submittedUserData) => async (dispatch) => {
       body:JSON.stringify(submittedUserData)
     }
 
-    const res = await fetch(`auth/login`, config)
+    const res = await fetch(`http://localhost:3001/auth/login`, config)
 
     .then(res => res.json())
   	.then(res => {
