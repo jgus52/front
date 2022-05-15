@@ -4,7 +4,8 @@ const initialState = {
     loading: false,
     success: null,
     error: null,
-    isUsercertification: false
+    isLogin: false,
+    isUsercertification: false,
 }
 
 const userReducer = (state = initialState, action) => {
@@ -90,6 +91,7 @@ const userReducer = (state = initialState, action) => {
                 loading: false,
                 success: true,
                 error: null,
+                isLogin: true,
             }
         case USER_LOGIN_FAIL:
             return {
