@@ -19,10 +19,14 @@ const Login = ({history}) => {
     const dispatch = useDispatch()
     const { loading, success, error } = useSelector(state=>state.user)
 
+    const makeHash = async (password) => {
+        sethashpassword(await bcrypt.hash(password, 10))
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        sethashpassword(bcrypt.hash(password, 10));
+        makeHash(password);
         console.log(hashpassword);
 
         setModalOpen('open')
@@ -46,7 +50,7 @@ const Login = ({history}) => {
 
         submittedUserData = {
             studentName: email,
-            password:hashpassword,
+            enrollSecret:hashpassword,
         }
 
         dispatch(login(submittedUserData))

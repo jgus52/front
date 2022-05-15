@@ -4,7 +4,7 @@ import Block from '../../components/Block/Block'
 import Button from "../../components/Button/Button";
 import Modal from "../../components/Modal/Modal";
 import { checkEmailValidation, checkPasswordValidation, checkStudentIDValidation } from '../../utils/authUtils'
-import { signup, resetErrorSuccess } from "../../store/actions/userActions";
+import { signup, resetErrorSuccess, usercertification, usersendmail, resetcertificationNumberCheck } from "../../store/actions/userActions";
 import * as bcrypt from 'bcryptjs';
 import './Signup.scss'
 
@@ -16,6 +16,7 @@ const Signup = ({history}) => {
     const [password, setPassword] = useState('')
     const [hashpassword, sethashpassword] = useState('')
     const [confirmPassword, setconfirmPassword] = useState('')
+    const [certificationNumber, setcertificationNumber] = useState('')
     const [formError, setFormError] = useState('')
     const [modalOpen, setModalOpen] = useState('close')
 
@@ -23,12 +24,31 @@ const Signup = ({history}) => {
 
     const dispatch = useDispatch()
 
+    const sendemail= () => {
+       dispatch(usersendmail(email));
+    }
+
+    const certification = (certificationNumber) => {
+        const submittednumber= {
+            number: certificationNumber
+        }
+
+        dispatch(usercertification(submittednumber));
+    }
+
+    const handleNumberInputChange = (e) => {
+        setcertificationNumber(e.target.value)
+        dispatch(resetcertificationNumberCheck())
+    }
+
+    const makeHash = async (password) => {
+        sethashpassword(await bcrypt.hash(password, 10))
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        sethashpassword(bcrypt.hash(password, 10));
-        console.log(hashpassword);
-        sethashpassword(bcrypt.hash(confirmPassword, 10));
+        makeHash(password);
         console.log(hashpassword);
 
         setModalOpen('open')
@@ -40,6 +60,10 @@ const Signup = ({history}) => {
             setFormError("올바른 이메일 형식이 아닙니다")
             return
         }
+        if(!usercertification) {
+            setFormError("사용자 인증을 하지 않으셨습니다.")
+            return
+          }
         if(!checkPasswordValidation(password)){
           setFormError("비밀번호는 숫자, 영어, 특수문자를. 포함하며 8자 이상이어야 합니다")
           return
@@ -53,7 +77,7 @@ const Signup = ({history}) => {
             studentName: username,
             studentID: studentID,
             email: email,
-            password: hashpassword,
+            enrollSecret: hashpassword,
         }
     
         dispatch(signup(submittedUserData))
@@ -121,13 +145,18 @@ const Signup = ({history}) => {
                                 spellCheck={false}
                                 onChange={(e)=>setEmail(e.target.value)}
                             />
-                            <Button text="인증 번호 전송" size="16px" color="#ffffff"/>
+                            <Button text="인증 번호 전송" size="16px" color="#ffffff" onClick={sendemail}/>
                         </div>
 
                         <p className="id-password-desc">인증번호</p>
                         <div className="signup-CertificationNumber-container">
-                            <input/>
-                            <Button text="확인" size="16px" color="#ffffff"/>
+                            <input
+                                type="text"
+                                value={certificationNumber}
+                                spellCheck={false}
+                                onChange={handleNumberInputChange}
+                            />
+                            <Button text="확인" size="16px" color="#ffffff" onClick={()=>certification(certificationNumber)}/>
                             <Button text="재전송" size="16px" color="#ffffff"/>
                         </div>
 
