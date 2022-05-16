@@ -29,7 +29,7 @@ const VoteNew = () => {
     candidateContent.push(
       <>
         <div key={candidates[i].number} className="candidate-name">
-          {candidates[i].candidateName}
+          {candidates[i].number + ". " + candidates[i].candidateName}
           <button></button>
         </div>
         <img
@@ -74,10 +74,11 @@ const VoteNew = () => {
       <div className="container">
         <form className="form-container" onSubmit={handleSubmit}>
           <div className="name-range">
-            <div>
+            <div className="name">
               <p className="form-title">투표명</p>
               <div className="border"></div>
               <input
+                className="input-name"
                 type="text"
                 placeholder="투표 명을 입력해주세요."
                 value={electionName}
@@ -87,64 +88,74 @@ const VoteNew = () => {
                 }}
               ></input>
             </div>
-            <div>
+            <div className="range">
               <p className="form-title">투표 기간</p>
               <div className="border"></div>
-              <DatePicker
-                dateFormat="yyyy/MM/d"
-                selectsRange={true}
-                startDate={startTime}
-                endDate={endTime}
-                onChange={(update) => {
-                  setDateRange(update);
-                }}
-                isClearable={true}
-              />
+              <div className="right-margin">
+                <DatePicker
+                  className="datepicker"
+                  dateFormat="yyyy/MM/d"
+                  selectsRange={true}
+                  startDate={startTime}
+                  endDate={endTime}
+                  onChange={(update) => {
+                    setDateRange(update);
+                  }}
+                  isClearable={true}
+                />
+              </div>
             </div>
           </div>
           <div>
             <p className="form-title">투표 정보</p>
             <div className="border"></div>
-            <textarea
-              className="electionInfo"
-              value={electionInfo}
-              onChange={(event) => {
-                setElectionInfo(event.target.value);
-              }}
-            ></textarea>
+            <div className="content-margin">
+              <textarea
+                className="electionInfo"
+                value={electionInfo}
+                onChange={(event) => {
+                  setElectionInfo(event.target.value);
+                }}
+              ></textarea>
+            </div>
           </div>
           <div>
             <p className="form-title">후보 정보</p>
             <div className="border"></div>
-            {candidateContent}
-            <p>새로운 후보 추가하기</p>
-            <img
-              className="candidate-profile"
-              src={profileAdd}
-              alt="후보 추가하기"
-            ></img>
+            <div className="content-margin">
+              {candidateContent}
+              <p className="candidate-name">새로운 후보 추가하기</p>
+              <img
+                className="candidate-profile"
+                src={profileAdd}
+                alt="후보 추가하기"
+              ></img>
+            </div>
+
             <div className="space"></div>
           </div>
           <div>
             <p className="form-title">유권자 수 및 정족수</p>
             <div className="border"></div>
-            <div>
-              <p className="id-password-desc">유권자 수</p>
-              <input
-                type="number"
-                value={total}
-                spellCheck={false}
-                onChange={(event) => setTotal(event.target.value)}
-              />
-            </div>
-            <div>
-              <p className="id-password-desc">정족수</p>
-              <input
-                type="number"
-                value={quorum}
-                spellCheck={false}
-                onChange={(event) => setQuorum(event.target.value)}
-              />
+            <div className="content-margin">
+              <div>
+                <p className="id-password-desc">유권자 수</p>
+                <input
+                  type="number"
+                  value={total}
+                  spellCheck={false}
+                  onChange={(event) => setTotal(event.target.value)}
+                />
+              </div>
+              <div>
+                <p className="id-password-desc">정족수</p>
+                <input
+                  type="number"
+                  value={quorum}
+                  spellCheck={false}
+                  onChange={(event) => setQuorum(event.target.value)}
+                />
+              </div>
             </div>
           </div>
           <div className="space2" />
