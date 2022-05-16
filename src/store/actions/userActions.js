@@ -1,4 +1,4 @@
-import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_ERROR_SUCCESS_RESET, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, USER_CERTIFICATION_REQUEST, USER_CERTIFICATION_SUCCESS, USER_CERTIFICATION_FAIL, USER_SENDMAIL_REQUEST, USER_SENDMAIL_SUCCESS, USER_SENDMAIL_FAIL, USER_RESET_CERTIFICATION_NUMBER_CHECK } from "../constants/userConstants"
+import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_ERROR_SUCCESS_RESET, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, USER_CERTIFICATION_REQUEST, USER_CERTIFICATION_SUCCESS, USER_CERTIFICATION_FAIL, USER_SENDMAIL_REQUEST, USER_SENDMAIL_SUCCESS, USER_SENDMAIL_FAIL, USER_RESET_CERTIFICATION_NUMBER_CHECK, USER_LOGIN_CHECK } from "../constants/userConstants"
 
 export const signup = (submittedUserData) => async (dispatch) => {
     try {
@@ -7,14 +7,15 @@ export const signup = (submittedUserData) => async (dispatch) => {
       const config = {
         method:'POST',
         headers:{
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Accept: "application/json",
         },
         body:JSON.stringify(submittedUserData)
       }
 
-      const res = await fetch(`http://localhost:3001/auth/register`, config)
+      const res = await fetch(`http://13.125.21.192:3001/auth/register`, config)
 
-      if(res.status === 200) {
+      if(res.status === 201) {
         dispatch({
           type: USER_REGISTER_SUCCESS,
           success: "회원가입에 성공하셨습니다. 축하드립니다."
@@ -51,7 +52,7 @@ export const usersendmail= (email) => async (dispatch) => {
 
     const res = await fetch(`http://localhost:3001/auth/sendmail`, config)
 
-    if(res.status === 200) {
+    if(res.status === 201) {
       dispatch({
         type: USER_SENDMAIL_SUCCESS,
         success: "인증 번호가 전송되었습니다."
@@ -87,7 +88,7 @@ export const usercertification = (submittednumber) => async (dispatch) => {
 
     const res = await fetch(`http://localhost:3001/auth/certification`, config)
 
-    if(res.status === 200) {
+    if(res.status === 201) {
       dispatch({
         type: USER_CERTIFICATION_SUCCESS,
         success: "사용자 인증이 완료되었습니다"
@@ -117,21 +118,20 @@ export const login = (submittedUserData) => async (dispatch) => {
     const config = {
       method:'POST',
       headers:{
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Accept: "application/json",
       },
       body:JSON.stringify(submittedUserData)
     }
 
-    const res = await fetch(`http://localhost:3001/auth/login`, config)
+    const res = await fetch(`http://13.125.21.192:3001/auth/login`, config)
+    const data = await res.json();
+    if (data.accessToken !== null&&data.accessToken !== undefined) {
+      localStorage.setItem("accessToken", data.accessToken);
+    }
 
-    .then(res => res.json())
-  	.then(res => {
-    	if(res.accessToken) {
-          localStorage.setItem('loing-token', res.accessToken);
-        }
-    })
 
-    if(res.status === 200) {
+    if(res.status === 201) {
       dispatch({
         type: USER_LOGIN_SUCCESS,
       })
@@ -165,4 +165,8 @@ export const resetErrorSuccess = () => (dispatch) => {
 
 export const resetcertificationNumberCheck = () => (dispatch) => {
   dispatch({ type: USER_RESET_CERTIFICATION_NUMBER_CHECK })
+}
+
+export const loginCheck = () => (dispatch) => {
+  dispatch({ type: USER_LOGIN_CHECK })
 }

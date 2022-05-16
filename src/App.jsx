@@ -1,25 +1,30 @@
 import React from 'react';
-import { useSelector } from "react-redux";
 import { Route, Switch } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Main from './pages/Main/Main';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
-import ElectionList from './pages/ElectionList/ElectionList';
+// import { useSelector, useDispatch } from "react-redux";
+// import { loginCheck } from "./store/actions/userActions";
 
 const App = () => {
+//   const dispatch = useDispatch()
+//   const { isLogin } = useSelector(state=>state.user)
 
-  const { isLogin } = useSelector(state=>state.user)
+//   if (!isLogin){
+//     if(localStorage.getItem("accessToken")!==null){
+//         dispatch(loginCheck())
+//     }
+// }
 
   return (
     <>
     <Header/>
       <Switch>
-        {isLogin?<Route path='/' exact component={ElectionList} />:<Route path='/' exact component={Main} />}
+        <Route path='/' exact component={Main} />
         <Route path='/login' exact component={Login} />
         <Route path='/signup' exact component={Signup} />
       </Switch>
-    
     </>
   );
 }

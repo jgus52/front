@@ -1,0 +1,62 @@
+.election-title{
+    display: flex;
+    margin-top: 75px;
+    margin-left: 32px;
+    margin-right: 32px;
+    border-bottom: 1px solid #000000;
+    font-size: 24px;
+    font-weight: bold;
+    justify-content: space-between;
+    align-items: center;
+
+    .election-name{
+        margin-left: 14px;
+        margin-bottom: 14px;
+        width: 30%
+    }
+
+    .election-info{
+        width: 85%
+    }
+
+    .election-date{
+        margin-right: 365px;
+        width: 23%
+    }
+}
+
+.election-list{
+    font-size: 18px;
+    background-color: white;
+    margin: 16px;
+
+    .election-list-components{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        border-bottom: 1px solid #000000;
+       
+        width: 100%;
+
+        .election-name{
+            margin-left: 14px;
+            margin-bottom: 14px;
+            width: 23%
+        }
+    
+        .election-info{
+            width: 65%
+        }
+    
+        .election-term{
+            width: 43.7%
+        }  
+    }   
+}
+
+.election-list-none{
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 12px;
+}

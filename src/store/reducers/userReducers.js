@@ -1,4 +1,4 @@
-import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_ERROR_SUCCESS_RESET, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, USER_CERTIFICATION_REQUEST, USER_CERTIFICATION_SUCCESS, USER_CERTIFICATION_FAIL, USER_SENDMAIL_REQUEST, USER_SENDMAIL_SUCCESS, USER_SENDMAIL_FAIL, USER_RESET_CERTIFICATION_NUMBER_CHECK } from "../constants/userConstants"
+import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_ERROR_SUCCESS_RESET, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, USER_CERTIFICATION_REQUEST, USER_CERTIFICATION_SUCCESS, USER_CERTIFICATION_FAIL, USER_SENDMAIL_REQUEST, USER_SENDMAIL_SUCCESS, USER_SENDMAIL_FAIL, USER_RESET_CERTIFICATION_NUMBER_CHECK, USER_LOGIN_CHECK  } from "../constants/userConstants"
 
 const initialState = {
     loading: false,
@@ -85,6 +85,13 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 isUsercertification: false
             }
+        case USER_LOGIN_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                success: null,
+                error: null,
+            }
         case USER_LOGIN_SUCCESS:
             return {
                 ...state,
@@ -99,6 +106,11 @@ const userReducer = (state = initialState, action) => {
                 loading: false,
                 success: null,
                 error: action.error,
+            }
+        case USER_LOGIN_CHECK:
+            return {
+                ...state,
+                isLogin: true,
             }
         case USER_ERROR_SUCCESS_RESET:
             return {

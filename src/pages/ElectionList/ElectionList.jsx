@@ -1,10 +1,17 @@
 import React from "react";
+import Electionitem from "./Electionitem";
+import './ElectionList.scss'
 
-const ElectionList = () => {
+function ElectionList({item}){
+  return (
+    <div  >
+      {
+        item.map(item=>{
+          return (<Electionitem item = {item}/>)
+        })
+      }
+    </div>
+  );
+}
   
-    return (
-      <p>투표조회화면</p>
-    );
-  };
-  
-  export default ElectionList;
+export default ElectionList;
