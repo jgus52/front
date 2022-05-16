@@ -4,6 +4,7 @@ import Header from './components/Header/Header';
 import Main from './pages/Main/Main';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
+import VoteNew from "./pages/VoteNew/VoteNew";
 // import { useSelector, useDispatch } from "react-redux";
 // import { loginCheck } from "./store/actions/userActions";
 
@@ -19,14 +20,15 @@ const App = () => {
 
   return (
     <>
-    <Header/>
+      <Header />
       <Switch>
-        <Route path='/' exact component={Main} />
-        <Route path='/login' exact component={Login} />
-        <Route path='/signup' exact component={Signup} />
+        <Route path="/" exact component={Main} />
+        <Route path="/login" exact component={Login} />
+        <Route path="/signup" exact component={Signup} />
+        <Route path="/votenew" exact component={VoteNew} />
       </Switch>
     </>
   );
-}
+};
 
 export default App;
