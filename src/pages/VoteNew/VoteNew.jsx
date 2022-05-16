@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 
 import "./VoteNew.scss";
+import Modal2 from "../../components/Modal/Modal2";
 
 import "react-datepicker/dist/react-datepicker.css";
 import img from "../../img/1619702385.jpg";
@@ -23,12 +24,19 @@ const VoteNew = () => {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. \nIn tincidunt est nunc. Cras eu bibendum odio. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vestibulum et risus scelerisque, mattis erat a, hendrerit mauris. Nulla facilisi. Praesent lobortis nisl et metus sollicitudin laoreet. Curabitur at elit viverra, semper enim et, efficitur lacus. Praesent at ipsum velit. Praesent eu tellus arcu. Suspendisse tellus libero,maximus nec imperdiet vel, porttitor ac mi. Sed lacinia mi vel arcu pretium, sed sollicitudin leo volutpat. Proin sodales felis et arcu sodales, id blandit libero maximus. Vestibulum et turpis id arcu ornare malesuada et ut orci. Sed lacinia elit nec risus aliquet, porta dignissim magna consectetur. Pellentesque eu pulvinar tortor. Donec at vehicula sapien, vel auctor tortor.",
     },
   ]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const openModal = () => {
+    setModalVisible(true);
+  };
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   let candidateContent = [];
   for (let i = 0; i < candidates.length; i++) {
     candidateContent.push(
-      <>
-        <div key={candidates[i].number} className="candidate-name">
+      <div key={candidates[i].number}>
+        <div className="candidate-name">
           {candidates[i].number + ". " + candidates[i].candidateName}
           <button></button>
         </div>
@@ -39,23 +47,26 @@ const VoteNew = () => {
         ></img>
         <div>{candidates[i].promise}</div>
         <div className="space"></div>
-      </>
+      </div>
     );
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch("http://localhost:3001/election/", {
+    fetch("http://13.125.21.192:3001/election/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
+        authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYXJlNTAyQHVvcy5hYy5rciIsImlhdCI6MTY1MjY3NTA0OH0.PD4D6kzkOSNr3QErG5_T7Lui8HA0ItdToJaNdKFnToc",
       },
       body: JSON.stringify({
         createElectionDTO: {
           electionName: electionName,
           startTime: startTime,
           endTime: endTime,
-          quorum: quorum,
-          total: total,
+          quorum: parseInt(quorum),
+          total: parseInt(total),
           electionInfo: electionInfo,
         },
         candidates: candidates,
@@ -69,8 +80,14 @@ const VoteNew = () => {
         }
       });
   };
+  const handleModalClick = () => {};
   return (
     <>
+      {modalVisible && (
+        <Modal2 onClose={closeModal} onClick={handleModalClick}>
+          {<div>lalala</div>}
+        </Modal2>
+      )}
       <div className="container">
         <form className="form-container" onSubmit={handleSubmit}>
           <div className="name-range">
@@ -126,6 +143,11 @@ const VoteNew = () => {
               {candidateContent}
               <p className="candidate-name">새로운 후보 추가하기</p>
               <img
+                onClick={(event) => {
+                  event.preventDefault();
+                  openModal();
+                  console.log("kaka" + modalVisible);
+                }}
                 className="candidate-profile"
                 src={profileAdd}
                 alt="후보 추가하기"
@@ -141,6 +163,7 @@ const VoteNew = () => {
               <div>
                 <p className="id-password-desc">유권자 수</p>
                 <input
+                  className="input-number"
                   type="number"
                   value={total}
                   spellCheck={false}
@@ -150,6 +173,7 @@ const VoteNew = () => {
               <div>
                 <p className="id-password-desc">정족수</p>
                 <input
+                  className="input-number"
                   type="number"
                   value={quorum}
                   spellCheck={false}
@@ -159,8 +183,16 @@ const VoteNew = () => {
             </div>
           </div>
           <div className="space2" />
-          <div>
-            <button type="submit">투표 개설 승인 요청</button>
+          <div className="center">
+            <div>
+              <input type="checkbox"></input>
+              <a className="submit-agree">
+                관련 사항을 확인 했으며 동의 합니다.
+              </a>
+            </div>
+            <button className="button-submit" type="submit">
+              투표 개설 승인 요청
+            </button>
           </div>
           <div className="space" />
         </form>
