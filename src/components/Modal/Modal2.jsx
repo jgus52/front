@@ -5,7 +5,7 @@ import "./Modal2.scss";
 const Modal2 = (props) => {
   return (
     <div
-      className={"modal-container"}
+      className={"modal2-container"}
       onClick={(event) => {
         if (event.target === event.currentTarget) {
           props.onClose(event);

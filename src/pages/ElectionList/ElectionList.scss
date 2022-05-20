@@ -3,24 +3,26 @@
     margin-top: 75px;
     margin-left: 32px;
     margin-right: 32px;
-    border-bottom: 1px solid #000000;
+    border-bottom: 2px solid #000000;
     font-size: 24px;
     font-weight: bold;
     justify-content: space-between;
     align-items: center;
 
     .election-name{
-        margin-left: 14px;
+        margin-left: 19px;
         margin-bottom: 14px;
         width: 30%
     }
 
     .election-info{
+        margin-bottom: 14px;
         width: 85%
     }
 
     .election-date{
         margin-right: 365px;
+        margin-bottom: 14px;
         width: 23%
     }
 }
@@ -28,7 +30,7 @@
 .election-list{
     font-size: 18px;
     background-color: white;
-    margin: 16px;
+    margin: 20px;
 
     .election-list-components{
         display: flex;
@@ -45,7 +47,7 @@
         }
     
         .election-info{
-            width: 65%
+            width: 65.7%
         }
     
         .election-term{

@@ -1,29 +1,21 @@
-import React, {useEffect} from "react"
-import Concept from '../../img/concept.png'
-import ElectionList from '../ElectionList/ElectionList';
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect} from 'react';
+// import { useSelector, useDispatch } from "react-redux";
+import { useParams } from 'react-router-dom';
+// import { electioninfo } from "../../store/actions/electionActions";
 
-import './Main.scss'
-import { loginCheck } from "../../store/actions/userActions";
-import { electioninfo } from "../../store/actions/electionActions";
+function Voteinfo(){
 
-const Main = () => {
-    const { isLogin } = useSelector(state=>state.user)
-    const { electionloading, electionlist} = useSelector(state=>state.election)
+    const { id } = useParams();
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
+    // const { electionloading, electionlist} = useSelector(state=>state.election)
 
-    if (!isLogin){
-        if(localStorage.getItem("accessToken")!==null){
-            dispatch(loginCheck())
-        }
-    }
 
-    useEffect(()=>{
-        if(!electionloading){
-            dispatch(electioninfo())
-        }
-    },[])
+    // useEffect(()=>{
+    //     if(!electionloading){
+    //         dispatch(electioninfo())
+    //     }
+    // },[])
 
     const testlist = [
         {
@@ -96,33 +88,16 @@ const Main = () => {
         },
       ]
 
-    return (
-        <div>
-            {!isLogin&&
-                (<div className="main-page">
-                    <div className="conceptimage">
-                        <img className="concept" src={Concept} />
-                    </div>
-                </div>)  
-            }
-            {isLogin&&
-                (<div className="election-container">
-                    <div className="election-title">
-                        <p className="election-name">투표 명</p>
-                        <p className="election-info">투표 정보</p>
-                        <p className="election-date">투표 기간</p>
-                    </div>
-                    <div className="election-list">
-                        <ElectionList item = {testlist}/>
-                    </div>
-                    {/* <div className="election-list-none">
-                        <p> </p>
-                    </div> */}
-                </div>)
-            }
-             
+    return(
+        <div className="voteinfo">
+            <div className="election-name">투표 명: {testlist[id-1].electionName} </div>
+            <div className="election-info">투표 정보: {testlist[id-1].lectionInfo} </div>
+            <div className="election-term">투표 기간: {testlist[id-1].startTime} ~ {testlist[id-1].endTime} </div>
+            <div className="election-term">후보자 번호: {testlist[id-1].candidates[id-1].number} </div>
+            <div className="election-term">후보자 정보: {testlist[id-1].candidates[id-1].profile} </div>
+            <div className="election-term">후보자 공략: {testlist[id-1].candidates[id-1].promise} </div>
         </div>
     );
-}
 
-export default Main;
+}
+export default Voteinfo;

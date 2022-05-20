@@ -1,7 +1,9 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 function Electionitem({item}){
     return(
+        <Link to={`/voteinfo/${item.electionid}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
         <div className="election-list">
             <div className="election-list-components">
                 <span className="election-name">{item.electionName}</span>
@@ -9,6 +11,7 @@ function Electionitem({item}){
                 <span className="election-term">{item.startTime} ~ {item.endTime}</span>
             </div>
         </div>
+        </Link>
     );
 
 }
