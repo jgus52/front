@@ -1,21 +1,33 @@
 import React, { useEffect} from 'react';
-// import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
-// import { electioninfo } from "../../store/actions/electionActions";
+// import { loginCheck } from "../../store/actions/userActions";
+import { electioninfo } from "../../store/actions/electionActions";
 
 function Voteinfo(){
 
     const { id } = useParams();
 
-    // const dispatch = useDispatch()
-    // const { electionloading, electionlist} = useSelector(state=>state.election)
+    const dispatch = useDispatch()
+
+    // const { isLogin } = useSelector(state=>state.user)
+    const { electionloading, electionlist} = useSelector(state=>state.election)
 
 
-    // useEffect(()=>{
-    //     if(!electionloading){
-    //         dispatch(electioninfo())
+    // if (!isLogin){
+    //     if(localStorage.getItem("accessToken")!==null){
+    //         dispatch(loginCheck())
     //     }
-    // },[])
+    // }
+
+    useEffect(()=>{
+        if(!electionloading){
+            dispatch(electioninfo())
+        }
+    },[])
+    
+    const length = electionlist.length;
+    console.log(length);
 
     const testlist = [
         {
@@ -90,12 +102,13 @@ function Voteinfo(){
 
     return(
         <div className="voteinfo">
-            <div className="election-name">투표 명: {testlist[id-1].electionName} </div>
-            <div className="election-info">투표 정보: {testlist[id-1].lectionInfo} </div>
-            <div className="election-term">투표 기간: {testlist[id-1].startTime} ~ {testlist[id-1].endTime} </div>
-            <div className="election-term">후보자 번호: {testlist[id-1].candidates[id-1].number} </div>
-            <div className="election-term">후보자 정보: {testlist[id-1].candidates[id-1].profile} </div>
-            <div className="election-term">후보자 공략: {testlist[id-1].candidates[id-1].promise} </div>
+            <div className="election-name">투표 명: {electionlist[length-id].name} </div>
+            <div className="election-info">투표 정보: {electionlist[length-1].info} </div>
+            <div className="election-term">투표 기간: {electionlist[length-1].startDate} ~ {electionlist[id-1].endDate} </div>
+            {/* <div className="election-term">후보자 번호: {electionlist[id-1].candidates[id-1].candidateNumber} </div>
+            <div className="election-term">후보자 이름: {electionlist[id-1].candidates[id-1].candidateName} </div>
+            <div className="election-term">후보자 정보: {electionlist[id-1].candidates[id-1].profile} </div>
+            <div className="election-term">후보자 공략: {electionlist[id-1].candidates[id-1].promise} </div> */}
         </div>
     );
 

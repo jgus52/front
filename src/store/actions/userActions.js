@@ -13,7 +13,7 @@ export const signup = (submittedUserData) => async (dispatch) => {
         body:JSON.stringify(submittedUserData)
       }
 
-      const res = await fetch(`http://13.125.78.245:3001/auth/register`, config)
+      const res = await fetch(`https://uosvote.tk/auth/register`, config)
 
       if(res.status === 201) {
         dispatch({
@@ -124,7 +124,7 @@ export const login = (submittedUserData) => async (dispatch) => {
       body:JSON.stringify(submittedUserData)
     }
 
-    const res = await fetch(`http://13.125.78.245:3001/auth/login`, config)
+    const res = await fetch(`https://uosvote.tk/auth/login`, config)
     const data = await res.json();
     if (data.accessToken !== null&&data.accessToken !== undefined) {
       localStorage.setItem("accessToken", data.accessToken);

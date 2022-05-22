@@ -113,7 +113,7 @@ const Main = () => {
                         <p className="election-date">투표 기간</p>
                     </div>
                     <div className="election-list">
-                        <ElectionList item = {testlist}/>
+                        <ElectionList item = {electionlist}/>
                     </div>
                     {/* <div className="election-list-none">
                         <p> </p>

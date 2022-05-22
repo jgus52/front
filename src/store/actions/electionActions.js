@@ -14,19 +14,21 @@ export const electioninfo = () => async (dispatch) => {
         },
       }
   
-      const res = await fetch(`http://13.125.78.245:3001/election`, config)  
-      const list = await res.json()
+      const res = await fetch(`https://uosvote.tk/election`, config)  
+      // const electionlist = await res.json()
+      // console.log(electionlist);
 
-      var contact = JSON.stringify(list); 
-      const {electionlist}  = JSON.parse(contact); 
-      console.log(electionlist);
+      // var contact = JSON.stringify(list); 
+      // console.log(contact);
+  
+      // var electionlist  = JSON.parse(contact); 
+      // console.log(electionlist);
   
       if(res.status === 200) {
         dispatch({
           type: ELECTIONLIST_SUCCESS,
-          payload:{ electionlist },
+          data: await res.json(),
         });
-        console.log("lalal"+res);
       } else {
         throw new Error()
       }
