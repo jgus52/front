@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 
 import "./VoteNew.scss";
 import Modal2 from "../../components/Modal/Modal2";
+import Modal3 from "../../components/Modal/Modal3";
 
 import "react-datepicker/dist/react-datepicker.css";
 import img from "../../img/1619702385.jpg";
@@ -12,16 +13,25 @@ const VoteNew = ({ history }) => {
   const [electionName, setElectionName] = useState("");
   const [dateRange, setDateRange] = useState([null, null]);
   const [startTime, endTime] = dateRange;
-  const [total, setTotal] = useState(0);
-  const [quorum, setQuorum] = useState(0);
+  const [total, setTotal] = useState();
+  const [quorum, setQuorum] = useState();
   const [electionInfo, setElectionInfo] = useState("");
   const [candidates, setCandidates] = useState([]);
   const [modal2Visible, setModal2Visible] = useState(false);
+  const [modal3Visible, setModal3Visible] = useState(false);
+  const [agree, setAgree] = useState(false);
+  const [isSubmitActive, setIsSubmitActive] = useState(false);
   const openModal2 = () => {
     setModal2Visible(true);
   };
   const closeModal2 = () => {
     setModal2Visible(false);
+  };
+  const openModal3 = () => {
+    setModal3Visible(true);
+  };
+  const closeModal3 = () => {
+    setModal3Visible(false);
   };
 
   let candidateContent = [];
@@ -83,14 +93,19 @@ const VoteNew = ({ history }) => {
     const newCandidates = [...candidates];
     newCandidates.push(newCandidate);
     setCandidates(newCandidates);
-    console.log(_name);
+    setIsSubmitActive(true);
+  };
+  const handleModal3Click = () => {
+    console.log("modal3");
+    setAgree(true);
   };
   return (
     <>
       {modal2Visible && (
-        <Modal2 onClose={closeModal2} onClick={handleModal2Click}>
-          {<div>lalala</div>}
-        </Modal2>
+        <Modal2 onClose={closeModal2} onClick={handleModal2Click}></Modal2>
+      )}
+      {modal3Visible && (
+        <Modal3 onClose={closeModal3} onClick={handleModal3Click}></Modal3>
       )}
       <div className="container">
         <form className="form-container" onSubmit={handleSubmit}>
@@ -103,6 +118,7 @@ const VoteNew = ({ history }) => {
                 type="text"
                 placeholder="투표 명을 입력해주세요."
                 value={electionName}
+                required
                 onChange={(event) => {
                   setElectionName(event.target.value);
                   console.log(startTime + endTime);
@@ -114,6 +130,7 @@ const VoteNew = ({ history }) => {
               <div className="border"></div>
               <div className="right-margin">
                 <DatePicker
+                  required
                   className="datepicker"
                   dateFormat="yyyy/MM/d"
                   selectsRange={true}
@@ -132,6 +149,7 @@ const VoteNew = ({ history }) => {
             <div className="border"></div>
             <div className="content-margin">
               <textarea
+                required
                 className="electionInfo"
                 value={electionInfo}
                 onChange={(event) => {
@@ -148,6 +166,7 @@ const VoteNew = ({ history }) => {
               <p className="candidate-name">새로운 후보 추가하기</p>
               <img
                 onClick={(event) => {
+                  console.log("lala");
                   event.preventDefault();
                   openModal2();
                 }}
@@ -166,6 +185,7 @@ const VoteNew = ({ history }) => {
               <div>
                 <p className="id-password-desc">유권자 수</p>
                 <input
+                  required
                   className="input-number"
                   type="number"
                   value={total}
@@ -176,6 +196,7 @@ const VoteNew = ({ history }) => {
               <div>
                 <p className="id-password-desc">정족수</p>
                 <input
+                  required
                   className="input-number"
                   type="number"
                   value={quorum}
@@ -188,13 +209,32 @@ const VoteNew = ({ history }) => {
           <div className="space2" />
           <div className="center">
             <div>
-              <input type="checkbox"></input>
-              <a className="submit-agree">
+              <input
+                type="checkbox"
+                required
+                checked={agree}
+                onClick={(event) => {
+                  setAgree(!agree);
+                }}
+              ></input>
+              <a
+                className="submit-agree"
+                onClick={(event) => {
+                  event.preventDefault();
+                  openModal3();
+                }}
+              >
                 관련 사항을 확인 했으며 동의 합니다.
               </a>
             </div>
-            <button className="button-submit" type="submit">
-              투표 개설 승인 요청
+            <button
+              className={
+                isSubmitActive ? "button-submit" : "button-submit-unactive"
+              }
+              type="submit"
+              disabled={!isSubmitActive}
+            >
+              {isSubmitActive ? "투표 개설 승인 요청" : "후보자를 등록해주세요"}
             </button>
           </div>
           <div className="space" />

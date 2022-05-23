@@ -1,13 +1,12 @@
 import { useState } from "react";
-import profileAdd from "../../img/profile_add.svg";
-import Block from "../Block/Block";
+import profileNormal from "../../img/profile_normal.svg";
 
 import "./Modal2.scss";
 
 const Modal2 = (props) => {
   const [candidateName, setCandidateName] = useState("");
   const [candidateInfo, setCandidateInfo] = useState("");
-  const [imgBase64, setImgBase64] = useState(profileAdd); // 파일 base64
+  const [imgBase64, setImgBase64] = useState(profileNormal); // 파일 base64
 
   const handleImgOnChange = (event) => {
     let reader = new FileReader();
@@ -23,7 +22,6 @@ const Modal2 = (props) => {
     }
   };
   const handleSubmit = (evnet) => {
-    //todo 예외처리
     props.onClick(candidateName, imgBase64, candidateInfo);
     props.onClose();
   };
@@ -42,6 +40,7 @@ const Modal2 = (props) => {
         <p>후보자 이름</p>
         <div className="border" />
         <input
+          required
           className="candi-name"
           type="text"
           placeholder="후보자 이름을 입력해 주세요."
@@ -55,8 +54,8 @@ const Modal2 = (props) => {
         <div className="border" />
         <img className="profile-img" src={imgBase64}></img>
         <div>
-          {/* onChange 추가 */}
           <input
+            required
             type="file"
             accept="image/jpg,impge/png,image/jpeg"
             onChange={handleImgOnChange}
@@ -66,6 +65,7 @@ const Modal2 = (props) => {
         <p>후보자 정보</p>
         <div className="border" />
         <textarea
+          required
           className="candidateInfo"
           value={candidateInfo}
           onChange={(event) => {
