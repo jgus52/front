@@ -8,28 +8,20 @@ import "react-datepicker/dist/react-datepicker.css";
 import img from "../../img/1619702385.jpg";
 import profileAdd from "../../img/profile_add.svg";
 
-const VoteNew = () => {
+const VoteNew = ({ history }) => {
   const [electionName, setElectionName] = useState("");
   const [dateRange, setDateRange] = useState([null, null]);
   const [startTime, endTime] = dateRange;
   const [total, setTotal] = useState(0);
   const [quorum, setQuorum] = useState(0);
   const [electionInfo, setElectionInfo] = useState("");
-  const [candidates, setCandidates] = useState([
-    {
-      number: 1,
-      candidateName: "이재원",
-      profile: img,
-      promise:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. \nIn tincidunt est nunc. Cras eu bibendum odio. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vestibulum et risus scelerisque, mattis erat a, hendrerit mauris. Nulla facilisi. Praesent lobortis nisl et metus sollicitudin laoreet. Curabitur at elit viverra, semper enim et, efficitur lacus. Praesent at ipsum velit. Praesent eu tellus arcu. Suspendisse tellus libero,maximus nec imperdiet vel, porttitor ac mi. Sed lacinia mi vel arcu pretium, sed sollicitudin leo volutpat. Proin sodales felis et arcu sodales, id blandit libero maximus. Vestibulum et turpis id arcu ornare malesuada et ut orci. Sed lacinia elit nec risus aliquet, porta dignissim magna consectetur. Pellentesque eu pulvinar tortor. Donec at vehicula sapien, vel auctor tortor.",
-    },
-  ]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const openModal = () => {
-    setModalVisible(true);
+  const [candidates, setCandidates] = useState([]);
+  const [modal2Visible, setModal2Visible] = useState(false);
+  const openModal2 = () => {
+    setModal2Visible(true);
   };
-  const closeModal = () => {
-    setModalVisible(false);
+  const closeModal2 = () => {
+    setModal2Visible(false);
   };
 
   let candidateContent = [];
@@ -45,7 +37,7 @@ const VoteNew = () => {
           src={candidates[i].profile}
           alt="프로필"
         ></img>
-        <div>{candidates[i].promise}</div>
+        <div>{candidates[i].candidateInfo}</div>
         <div className="space"></div>
       </div>
     );
@@ -79,12 +71,24 @@ const VoteNew = () => {
           localStorage.setItem("wtw-token", response.token);
         }
       });
+    history.push("/");
   };
-  const handleModalClick = () => {};
+  const handleModal2Click = (_name, _file, _info) => {
+    const newCandidate = {
+      number: candidates.length + 1,
+      candidateName: _name,
+      profile: _file,
+      candidateInfo: _info,
+    };
+    const newCandidates = [...candidates];
+    newCandidates.push(newCandidate);
+    setCandidates(newCandidates);
+    console.log(_name);
+  };
   return (
     <>
-      {modalVisible && (
-        <Modal2 onClose={closeModal} onClick={handleModalClick}>
+      {modal2Visible && (
+        <Modal2 onClose={closeModal2} onClick={handleModal2Click}>
           {<div>lalala</div>}
         </Modal2>
       )}
@@ -145,8 +149,7 @@ const VoteNew = () => {
               <img
                 onClick={(event) => {
                   event.preventDefault();
-                  openModal();
-                  console.log("kaka" + modalVisible);
+                  openModal2();
                 }}
                 className="candidate-profile"
                 src={profileAdd}
