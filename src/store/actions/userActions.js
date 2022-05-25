@@ -137,8 +137,8 @@ export const login = (submittedUserData) => async (dispatch) => {
     const res = await fetch(`https://uosvote.tk/auth/login`, config)
     const data = await res.json();
 
-    if (data.cookie !== null&&data.cookie !== undefined) {
-      localStorage.setItem("Cookie", data.cookie);
+    if (data.accessToken !== null&&data.accessToken !== undefined) {
+      localStorage.setItem("accessToken", data.accessToken);
     }
 
 

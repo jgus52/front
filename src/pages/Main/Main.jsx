@@ -111,14 +111,14 @@ const Main = () => {
 
     return (
         <div>
-            {isLogin&&
+            {!isLogin&&
                 (<div className="main-page">
                     <div className="conceptimage">
                         <img className="concept" src={Concept} />
                     </div>
                 </div>)  
             }
-            {!isLogin&&
+            {isLogin&&
                 (<div className="election-container">
                     <div className="election-title">
                         <p className="election-name">투표 명</p>
@@ -134,7 +134,7 @@ const Main = () => {
 
                     {(testlist.length > 0)&&
                         (<div className="election-list">
-                            <ElectionList item = {testlist}/>
+                            <ElectionList item = {electionlist}/>
                         </div>)
                     }   
                 </div>)

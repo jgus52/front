@@ -54,7 +54,7 @@ const VoteNew = ({ history }) => {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch("http://13.125.21.192:3001/election/", {
+    fetch("https://uosvote.tk/election/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
