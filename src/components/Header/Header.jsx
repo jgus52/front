@@ -17,7 +17,7 @@ const Header = () => {
       <div className="header-menu">
         {!isLogin&&<Button2 text="로그인" link="/login" color="#ffffff" size="20px" />}
         {!isLogin&&<Button text="회원가입" link="/signup" color="#06287F" size="20px" />}
-        {isLogin&&<Button text="투표 개설" link="/createElection" color="#06287F" size="20px" />}
+        {isLogin&&<Button text="투표 개설" link="/votenew" color="#06287F" size="20px" />}
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ const electionReducer = (state = initialState, action) => {
                 ...state,
                 electionloading: false,
                 success: action.success,
-                electionlist: action.payload.electionlist,
+                electionlist: action.data,
                 error: null,
             }
         case ELECTIONLIST_FAIL:

@@ -13,7 +13,7 @@ export const signup = (submittedUserData) => async (dispatch) => {
         body:JSON.stringify(submittedUserData)
       }
 
-      const res = await fetch(`http://13.125.21.192:3001/auth/register`, config)
+      const res = await fetch(`https://uosvote.tk/auth/register`, config)
 
       if(res.status === 201) {
         dispatch({
@@ -45,12 +45,19 @@ export const usersendmail= (email) => async (dispatch) => {
     const config = {
       method:'POST',
       headers:{
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Accept: "application/json",
       },
       body:JSON.stringify({email})
     }
 
-    const res = await fetch(`http://localhost:3001/auth/sendmail`, config)
+    const res = await fetch(`https://uosvote.tk/auth/sendmail`, config)
+
+    const data = await res.json();
+
+    if (data.accessToken !== null&&data.accessToken !== undefined) {
+      localStorage.setItem("accessToken", data.accessToken);
+    }
 
     if(res.status === 201) {
       dispatch({
@@ -81,12 +88,15 @@ export const usercertification = (submittednumber) => async (dispatch) => {
     const config = {
       method:'POST',
       headers:{
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Accept: "application/json",
+        authorization: 
+          "Bearer " + localStorage.getItem("Cookie"),
       },
       body:JSON.stringify(submittednumber)
     }
 
-    const res = await fetch(`http://localhost:3001/auth/certification`, config)
+    const res = await fetch(`https://uosvote.tk/auth/certification`, config)
 
     if(res.status === 201) {
       dispatch({
@@ -124,10 +134,11 @@ export const login = (submittedUserData) => async (dispatch) => {
       body:JSON.stringify(submittedUserData)
     }
 
-    const res = await fetch(`http://13.125.21.192:3001/auth/login`, config)
+    const res = await fetch(`https://uosvote.tk/auth/login`, config)
     const data = await res.json();
-    if (data.accessToken !== null&&data.accessToken !== undefined) {
-      localStorage.setItem("accessToken", data.accessToken);
+
+    if (data.cookie !== null&&data.cookie !== undefined) {
+      localStorage.setItem("Cookie", data.cookie);
     }
 
 

@@ -1,4 +1,4 @@
-.election-title{
+.hash-list-title{
     display: flex;
     margin-top: 75px;
     margin-left: 32px;
@@ -9,30 +9,26 @@
     justify-content: space-between;
     align-items: center;
 
-    .election-name{
+    .hash-site-name{
         margin-left: 19px;
         margin-bottom: 14px;
         width: 30%
     }
 
-    .election-info{
+    .hash{
         margin-bottom: 14px;
         width: 85%
     }
 
-    .election-date{
-        margin-right: 365px;
-        margin-bottom: 14px;
-        width: 23%
-    }
 }
 
-.election-list{
+.hash-list{
     font-size: 18px;
     background-color: white;
     margin: 20px;
+    height: 500px;
 
-    .election-list-components{
+    .hash-list-components{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -40,25 +36,14 @@
        
         width: 100%;
 
-        .election-name{
+        .hash-site{
             margin-left: 14px;
             margin-bottom: 14px;
             width: 23%
         }
     
-        .election-info{
+        .hash{
             width: 65.7%
         }
-    
-        .election-term{
-            width: 43.7%
-        }  
     }   
-}
-
-.election-list-none{
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 12px;
 }
