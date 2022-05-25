@@ -6,6 +6,7 @@ import Modal from "../../components/Modal/Modal";
 import { checkEmailValidation, checkPasswordValidation, checkStudentIDValidation } from '../../utils/authUtils'
 import { signup, resetErrorSuccess, usercertification, usersendmail, resetcertificationNumberCheck } from "../../store/actions/userActions";
 // import * as bcrypt from 'bcryptjs';
+import crypto from 'crypto-js';
 import './Signup.scss'
 
 const Signup = ({history}) => {
@@ -27,28 +28,31 @@ const Signup = ({history}) => {
     //    dispatch(usersendmail(email));
     // }
 
-    // const certification = (certificationNumber) => {
-    //     const submittednumber= {
-    //         number: certificationNumber
-    //     }
+    var CryptoJS = require("crypto-js");
 
-    //     dispatch(usercertification(submittednumber));
+    // const makeAES = async(certificationNumber) => {
+    //     return CryptoJS.AES.encrypt(certificationNumber, 'secret key 123').toString();
     // }
+    
+    const certification = (certificationNumber) => {
+
+        const ciphernum = CryptoJS.AES.encrypt(certificationNumber, 'secret key 123').toString();
+        console.log(ciphernum);
+
+        const submittednumber= {
+            number: ciphernum 
+        }
+
+        dispatch(usercertification(submittednumber));
+    }
 
     const handleNumberInputChange = (e) => {
         setcertificationNumber(e.target.value)
         dispatch(resetcertificationNumberCheck())
     }
 
-    // const makeHash = async(password) => {
-    //     return await bcrypt.hash(password, 10)
-    // }
-
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-        // const hashpassword = await makeHash(password);
-        // console.log(hashpassword);
 
         setModalOpen('open')
         if(!checkStudentIDValidation(studentID)) {
@@ -157,9 +161,8 @@ const Signup = ({history}) => {
                                 spellCheck={false}
                                 onChange={handleNumberInputChange}
                             />
-                            <Button text="확인" size="16px" color="#ffffff" //onClick={()=>certification(certificationNumber)}/>
-                            />
-                            <Button text="재전송" size="16px" color="#ffffff"/>
+                            <Button text="확인" size="16px" color="#ffffff" onClick={()=>certification(certificationNumber)}/>
+                            {/* <Button text="재전송" size="16px" color="#ffffff" onClick={sendemail}/> */}
                         </div>
 
                         <div className="signup-password-container">

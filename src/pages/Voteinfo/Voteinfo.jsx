@@ -28,6 +28,8 @@ function Voteinfo(){
     
     const length = electionlist.length;
     console.log(length);
+    const length2 = electionlist[length-id].candidates.length;
+    console.log(length2);
 
     const testlist = [
         {
@@ -103,12 +105,12 @@ function Voteinfo(){
     return(
         <div className="voteinfo">
             <div className="election-name">투표 명: {electionlist[length-id].name} </div>
-            <div className="election-info">투표 정보: {electionlist[length-1].info} </div>
-            <div className="election-term">투표 기간: {electionlist[length-1].startDate} ~ {electionlist[id-1].endDate} </div>
-            {/* <div className="election-term">후보자 번호: {electionlist[id-1].candidates[id-1].candidateNumber} </div>
-            <div className="election-term">후보자 이름: {electionlist[id-1].candidates[id-1].candidateName} </div>
-            <div className="election-term">후보자 정보: {electionlist[id-1].candidates[id-1].profile} </div>
-            <div className="election-term">후보자 공략: {electionlist[id-1].candidates[id-1].promise} </div> */}
+            <div className="election-info">투표 정보: {electionlist[length-id].info} </div>
+            <div className="election-term">투표 기간: {electionlist[length-id].startDate} ~ {electionlist[length-id].endDate} </div>
+            {/* <div className="election-term">후보자 번호: {electionlist[length-1].candidates[length2-1].candidateNumber} </div>
+            <div className="election-term">후보자 이름: {electionlist[length-1].candidates[length2-1].candidateName} </div>
+            <div className="election-term">후보자 정보: {electionlist[length-1].candidates[length2-1].profile} </div>
+            <div className="election-term">후보자 공략: {electionlist[length-1].candidates[length2-1].promise} </div> */}
         </div>
     );
 

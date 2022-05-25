@@ -6,6 +6,7 @@ import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
 import Voteinfo from "./pages/Voteinfo/Voteinfo";
 import VoteNew from "./pages/VoteNew/VoteNew";
+import VoteVerification from "./pages/VoteVerification/VoteVerification";
 // import { useSelector, useDispatch } from "react-redux";
 // import { loginCheck } from "./store/actions/userActions";
 
