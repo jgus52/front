@@ -107,7 +107,6 @@ function Voteinfo(){
             <div className="election-name">투표 명: {electionlist[length-id].name} </div>
             <div className="election-info">투표 정보: {electionlist[length-id].info} </div>
             <div className="election-term">투표 기간: {electionlist[length-id].startDate} ~ {electionlist[length-id].endDate} </div>
-            <div className="election-term">후보자 정보: {electionlist[length-id].candidates[0].profile} </div>
             {/* <div className="election-term">후보자 번호: {electionlist[length-1].candidates[length2-1].candidateNumber} </div>
             <div className="election-term">후보자 이름: {electionlist[length-1].candidates[length2-1].candidateName} </div>
             <div className="election-term">후보자 정보: {electionlist[length-1].candidates[length2-1].profile} </div>
