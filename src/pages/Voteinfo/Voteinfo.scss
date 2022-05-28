@@ -1,0 +1,63 @@
+.voteinfo {
+  margin-top: 72px;
+  margin-right: 32px;
+  margin-left: 32px;
+  .name-range {
+    display: flex;
+    flex-direction: row;
+    .name {
+      width: 80%;
+      .input-name {
+        font-size: 20px;
+        height: 28px;
+        margin-left: 14px;
+        margin-right: 14px;
+        padding-left: 8px;
+        padding-right: 8px;
+        width: 95%;
+        background: rgba(0, 0, 0, 0.15);
+        border: none;
+        border-bottom: 1px solid black;
+        border-radius: 5px 5px 0px 0px;
+      }
+    }
+    .range {
+      width: 20%;
+      .datepicker {
+        font-size: 20px;
+        height: 28px;
+        padding-left: 8px;
+        padding-right: 8px;
+        background: rgba(0, 0, 0, 0.15);
+        border: none;
+        border-bottom: 1px solid black;
+        border-radius: 5px 5px 0px 0px;
+        margin-left: 14px;
+      }
+    }
+  }
+
+  .border {
+    border-bottom: 1px solid black;
+    width: fit-content;
+    width: 100%;
+    margin-top: 14px;
+    margin-bottom: 14px;
+  }
+  .space {
+    margin-bottom: 24px;
+  }
+  .space2 {
+    margin-bottom: 200px;
+  }
+  .title {
+    margin-top: 24px;
+    padding-left: 14px;
+    font-weight: 700;
+    font-size: 24px;
+  }
+  .info {
+    padding-left: 14px;
+    font-size: 18px;
+  }
+}
