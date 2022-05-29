@@ -23,17 +23,33 @@ function Voteinfo() {
   //     }
   // }
 
+  const length = electionlist.length;
+  console.log(length);
   let candidateContent = [];
+  console.log(electionlist[length - id]);
+  for (let i = 0; i < electionlist[length - id].candidates.length; i++) {
+    candidateContent.push(
+      <div key={electionlist[length - id].candidates[i].candidateNumber}>
+        <div className="candidate-name">
+          {electionlist[length - id].candidates[i].candidateNumber + ". " + electionlist[length - id].candidates[i].candidateName}
+        </div>
+        <img
+          className="candidate-profile"
+          src={electionlist[length - id].candidates[i].profile}
+          alt="프로필"
+        ></img>
+        <div>{electionlist[length - id].candidates[i].promise}</div>
+        <div className="space"></div>
+      </div>
+    );
+  }
   useEffect(() => {
     if (!electionloading) {
       dispatch(electioninfo());
     }
   }, []);
 
-  const length = electionlist.length;
-  console.log(length);
-  const length2 = electionlist[length - id].candidates.length;
-  console.log(length2);
+
 
   return (
     <div className="voteinfo">
@@ -58,6 +74,9 @@ function Voteinfo() {
       <div className="title">후보 정보</div>
       <div className="border"></div>
       <div className="info">{candidateContent}</div>
+      <div className="title">투표 현황</div>
+      <div className="border"></div>
+      <div className="center"></div>
     </div>
   );
 }
