@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import "react-step-progress-bar/styles.css";
+import { ProgressBar, Step } from "react-step-progress-bar";
 // import { loginCheck } from "../../store/actions/userActions";
 import Moment from "moment";
 import { electioninfo } from "../../store/actions/electionActions";
@@ -24,7 +26,7 @@ function Voteinfo() {
   // }
 
   const length = electionlist.length;
-  console.log(length);
+  console.log(length + ", " + [electionlist[length - id].quorum / electionlist[length - id].total * 100]);
   let candidateContent = [];
   console.log(electionlist[length - id]);
   for (let i = 0; i < electionlist[length - id].candidates.length; i++) {
@@ -76,7 +78,34 @@ function Voteinfo() {
       <div className="info">{candidateContent}</div>
       <div className="title">투표 현황</div>
       <div className="border"></div>
-      <div className="center"></div>
+      <div className="center">
+        <ProgressBar
+          width={800}
+          percent={75}
+          stepPositions={[electionlist[length - id].quorum / electionlist[length - id].total * 100]}
+          filledBackground="linear-gradient(to right, #06287f, #06287f)"
+          unfilledBackground="#8393bf"
+        >
+          <Step transition="scale">
+            {({ accomplished, index }) => (
+              <div className={`indexedStep ${accomplished ? "accomplished" : ""}`}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  borderRadius: "50%",
+                  width: 20,
+                  height: 20,
+                  color: "black",
+                  backgroundColor: accomplished ? "green" : "gray"
+                }}>
+                <br></br>
+                {"정족수"}
+              </div>
+            )}
+          </Step>
+        </ProgressBar>
+        <p>lala</p>
+      </div>
     </div>
   );
 }
