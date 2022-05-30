@@ -9,10 +9,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import img from "../../img/1619702385.jpg";
 import profileAdd from "../../img/profile_add.svg";
 
+import { ko } from "date-fns/esm/locale";
+
 const VoteNew = ({ history }) => {
   const [electionName, setElectionName] = useState("");
-  const [dateRange, setDateRange] = useState([null, null]);
-  const [startTime, endTime] = dateRange;
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
   const [total, setTotal] = useState();
   const [quorum, setQuorum] = useState();
   const [electionInfo, setElectionInfo] = useState("");
@@ -47,7 +49,7 @@ const VoteNew = ({ history }) => {
           src={candidates[i].profile}
           alt="프로필"
         ></img>
-        <div>{candidates[i].candidateInfo}</div>
+        <div className="candidate-info">{candidates[i].candidateInfo}</div>
         <div className="space"></div>
       </div>
     );
@@ -132,14 +134,26 @@ const VoteNew = ({ history }) => {
                 <DatePicker
                   required
                   className="datepicker"
-                  dateFormat="yyyy/MM/d"
-                  selectsRange={true}
-                  startDate={startTime}
-                  endDate={endTime}
+                  dateFormat="yyyy/MM/d h:mm aa"
+                  locale={ko}
+                  selected={startTime}
+                  timeInputLabel="Time:"
+                  showTimeInput
                   onChange={(update) => {
-                    setDateRange(update);
+                    setStartTime(update);
                   }}
-                  isClearable={true}
+                />
+                <DatePicker
+                  required
+                  className="datepicker"
+                  dateFormat="yyyy/MM/d h:mm aa"
+                  locale={ko}
+                  selected={endTime}
+                  timeInputLabel="Time:"
+                  showTimeInput
+                  onChange={(update) => {
+                    setEndTime(update);
+                  }}
                 />
               </div>
             </div>
