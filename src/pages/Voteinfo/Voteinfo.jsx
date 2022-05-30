@@ -25,13 +25,22 @@ function Voteinfo(){
         }
     },[])
     
-    const length = electionlist.length;
 
     return(
         <div className="voteinfo">
-            <div className="election-name">투표 명: {electionlist[length-id].name} </div>
-            <div className="election-info">투표 정보: {electionlist[length-id].info} </div>
-            <div className="election-term">투표 기간: {electionlist[length-id].startDate} ~ {electionlist[length-id].endDate} </div>
+        {
+            electionlist.map(data=>{
+                if(data.id == id){
+                    return(
+                        <>
+                            <div className="election-name">투표 명: {data.name} </div>
+                            <div className="election-info">투표 정보: {data.info} </div>
+                            <div className="election-term">투표 기간: {data.startDate} ~ {data.endDate} </div>
+                        </>
+                    )
+                }  
+            })
+        }
         </div>
     );
 

@@ -14,7 +14,7 @@ export const myhash = () => async (dispatch) => {
         },
       }
   
-      const res = await fetch(`https://uosvote.tk/election/myballot/13`, config)
+      const res = await fetch(`https://uosvote.tk/election/myballot/38`, config)
       const myhash = await res.json();
     
       if(res.status === 200) {
@@ -48,7 +48,7 @@ export const myhash = () => async (dispatch) => {
         },
       }
   
-      const res = await fetch(`https://uosvote.tk/election/ballot/13`, config)  
+      const res = await fetch(`https://uosvote.tk/election/ballot/38`, config)  
       const allhash = await res.json();
     
       if(res.status === 200) {
