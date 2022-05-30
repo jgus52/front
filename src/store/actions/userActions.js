@@ -75,7 +75,7 @@ export const usersendmail= (email) => async (dispatch) => {
 
   } catch (err) {
     dispatch({
-        type: USER_CERTIFICATION_FAIL,
+        type: USER_SENDMAIL_FAIL,
         error: "에러가 발생했습니다. 다시 시도해주세요" 
       })
   }

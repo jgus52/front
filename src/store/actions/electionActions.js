@@ -15,15 +15,7 @@ export const electioninfo = () => async (dispatch) => {
       }
   
       const res = await fetch(`https://uosvote.tk/election`, config)  
-      // const electionlist = await res.json()
-      // console.log(electionlist);
-
-      // var contact = JSON.stringify(list); 
-      // console.log(contact);
-  
-      // var electionlist  = JSON.parse(contact); 
-      // console.log(electionlist);
-  
+    
       if(res.status === 200) {
         dispatch({
           type: ELECTIONLIST_SUCCESS,
@@ -39,4 +31,4 @@ export const electioninfo = () => async (dispatch) => {
           error: "에러가 발생했습니다. 다시 시도해주세요" 
         })
     }
-  }
+}

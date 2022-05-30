@@ -5,7 +5,6 @@ import Button from "../../components/Button/Button";
 import Modal from "../../components/Modal/Modal";
 import { checkEmailValidation, checkPasswordValidation, checkStudentIDValidation } from '../../utils/authUtils'
 import { signup, resetErrorSuccess, usercertification, usersendmail, resetcertificationNumberCheck } from "../../store/actions/userActions";
-// import * as bcrypt from 'bcryptjs';
 import crypto from 'crypto-js';
 import './Signup.scss'
 
@@ -29,10 +28,6 @@ const Signup = ({history}) => {
     // }
 
     var CryptoJS = require("crypto-js");
-
-    // const makeAES = async(certificationNumber) => {
-    //     return CryptoJS.AES.encrypt(certificationNumber, 'secret key 123').toString();
-    // }
     
     const certification = (certificationNumber) => {
 
@@ -77,7 +72,6 @@ const Signup = ({history}) => {
         }
 
         const submittedUserData = {
-            // studentName: username,
             studentNum: studentID,
             email: email,
             enrollSecret: password,

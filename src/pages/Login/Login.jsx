@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Block from '../../components/Block/Block'
 import Button from "../../components/Button/Button";
-// import * as bcrypt from 'bcryptjs';
 import Modal from "../../components/Modal/Modal";
 import { login, resetErrorSuccess } from "../../store/actions/userActions";
 import { checkEmailValidation, checkPasswordValidation } from "../../utils/authUtils";
@@ -12,22 +11,14 @@ import './Login.scss'
 const Login = ({history}) => {
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
-    // const [hashpassword, sethashpassword] = useState('')
     const [modalOpen, setModalOpen] = useState('')
     const [formError, setFormError] = useState('')
 
     const dispatch = useDispatch()
     const { loading, success, error } = useSelector(state=>state.user)
 
-    // const makeHash = async(password) => {
-    //     return await bcrypt.hash(password, 10)
-    // }
-
     const handleSubmit = async(e) => {
         e.preventDefault()
-
-        // const hashpassword = await makeHash(password);
-        // console.log(hashpassword);
 
         setModalOpen('open')
 
@@ -63,7 +54,7 @@ const Login = ({history}) => {
         setFormError(prevState => '')  
         }, 500);
     }
-    console.log(success);
+    
     useEffect(() => {
         if(success) {
           dispatch(resetErrorSuccess())
