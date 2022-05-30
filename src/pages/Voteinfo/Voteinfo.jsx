@@ -19,6 +19,8 @@ function Voteinfo() {
     (state) => state.election
   );
 
+  const now = 71;
+
   if (!isLogin) {
     if (localStorage.getItem("accessToken") !== null) {
       dispatch(loginCheck());
@@ -36,6 +38,7 @@ function Voteinfo() {
   console.log(electionlist);
 
   const length = electionlist.length;
+  let fullRange, nowRange;
 
   let candidateContent = [];
   if (electionlist.length > 0) {
@@ -59,6 +62,13 @@ function Voteinfo() {
         </div>
       );
     }
+    fullRange =
+      new Date(electionlist[length - id].endDate) -
+      new Date(electionlist[length - id].startDate);
+    console.log("lalala" + fullRange);
+    nowRange = new Date() - new Date(electionlist[length - id].startDate);
+    console.log("hahaha" + nowRange);
+    console.log("kakaak" + (nowRange / fullRange) * 100);
   }
 
   return (
@@ -100,9 +110,31 @@ function Voteinfo() {
           <div className="title">투표 현황</div>
           <div className="border"></div>
           <div className="center">
+            <div className="center-row">
+              <div className="center-title">투표 참여율</div>
+            </div>
+            <div className="center-row-inner">
+              <div className="center-mark">
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    borderRadius: "50%",
+                    width: 15,
+                    height: 15,
+                    backgroundColor: "#067F7F",
+                  }}
+                ></div>
+                정족수({electionlist[length - id].quorum}명)
+              </div>
+              <div className="center-info">
+                {(now / electionlist[length - id].total) * 100}%({now}명/
+                {electionlist[length - id].total}명)
+              </div>
+            </div>
             <ProgressBar
               width={800}
-              percent={75}
+              percent={(now / electionlist[length - id].total) * 100}
               stepPositions={[
                 (electionlist[length - id].quorum /
                   electionlist[length - id].total) *
@@ -123,13 +155,28 @@ function Voteinfo() {
                       borderRadius: "50%",
                       width: 15,
                       height: 15,
-                      backgroundColor: "#D50000",
+                      backgroundColor: "#067F7F",
                     }}
                   ></div>
                 )}
               </Step>
             </ProgressBar>
-            <p>lala</p>
+            <div className="center-row">
+              <div className="center-title">남은 투표 기간</div>
+            </div>
+            <div className="center-row-inner">
+              <div className="center-mark"></div>
+              <div className="center-info">
+                {((nowRange / fullRange) * 100).toFixed(1)}%
+              </div>
+            </div>
+            <ProgressBar
+              width={800}
+              percent={(nowRange / fullRange) * 100}
+              filledBackground="linear-gradient(to right, #06287f, #06287f)"
+              unfilledBackground="#8393bf"
+            ></ProgressBar>
+            <div className="space2"></div>
           </div>
         </>
       )}

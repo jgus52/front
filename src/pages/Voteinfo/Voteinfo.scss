@@ -57,6 +57,31 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    .center-row {
+      width: 840px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .center-row-inner {
+      margin-top: 2px;
+      width: 800px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      .center-mark {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+    .center-title {
+      margin-top: 24px;
+      font-weight: 700;
+      font-size: 20px;
+    }
 
     .submit-agree {
       margin-left: 8px;
