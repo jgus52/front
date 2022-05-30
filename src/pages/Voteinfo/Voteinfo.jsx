@@ -52,7 +52,9 @@ function Voteinfo() {
             src={electionlist[length - id].candidates[i].profile}
             alt="프로필"
           ></img>
-          <div>{electionlist[length - id].candidates[i].promise}</div>
+          <div className="candidate-promise">
+            {electionlist[length - id].candidates[i].promise}
+          </div>
           <div className="space"></div>
         </div>
       );
@@ -79,12 +81,12 @@ function Voteinfo() {
               <div className="title">기간 </div>
               <div className="border"></div>
               <div className="info">
-                {Moment.utc(electionlist[length - id].startDate).format(
-                  "yyyy.MM.DD"
+                {Moment(electionlist[length - id].startDate).format(
+                  "yyyy/MM/DD h:mm a"
                 )}{" "}
                 ~
-                {Moment.utc(electionlist[length - id].endDate).format(
-                  "yyyy.MM.DD"
+                {Moment(electionlist[length - id].endDate).format(
+                  "yyyy/MM/DD h:mm a"
                 )}
               </div>
             </div>

@@ -11,7 +11,7 @@
       width: 80%;
 
       .input-name {
-        font-size: 20px;
+        font-size: 16px;
         height: 28px;
         margin-left: 14px;
         margin-right: 14px;
@@ -29,7 +29,7 @@
       width: 20%;
 
       .datepicker {
-        font-size: 20px;
+        font-size: 16px;
         height: 28px;
         padding-left: 8px;
         padding-right: 8px;
@@ -48,7 +48,7 @@
 
   .candidate-name {
     font-weight: 700;
-    font-size: 24px;
+    font-size: 18px;
     margin-bottom: 14px;
   }
 
@@ -119,9 +119,14 @@
     font-weight: 700;
     font-size: 24px;
   }
+  .candidate-promise {
+    white-space: pre-line;
+  }
 
   .info {
     padding-left: 14px;
-    font-size: 18px;
+    font-size: 16px;
+
+    white-space: pre-line;
   }
 }
