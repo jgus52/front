@@ -7,18 +7,8 @@ import Signup from './pages/Signup/Signup';
 import Voteinfo from "./pages/Voteinfo/Voteinfo";
 import VoteNew from "./pages/VoteNew/VoteNew";
 import VoteVerification from "./pages/VoteVerification/VoteVerification";
-// import { useSelector, useDispatch } from "react-redux";
-// import { loginCheck } from "./store/actions/userActions";
 
 const App = () => {
-//   const dispatch = useDispatch()
-//   const { isLogin } = useSelector(state=>state.user)
-
-//   if (!isLogin){
-//     if(localStorage.getItem("accessToken")!==null){
-//         dispatch(loginCheck())
-//     }
-// }
 
   return (
     <>
@@ -29,6 +19,7 @@ const App = () => {
         <Route path="/signup" exact component={Signup} />
         <Route path="/voteinfo/:id" exact component={Voteinfo} />
         <Route path="/votenew" exact component={VoteNew} />
+        <Route path="/voteverification/" exact component={VoteVerification} />
       </Switch>
     </>
   );

@@ -4,7 +4,7 @@ import './ElectionList.scss'
 
 function ElectionList({item}){
   return (
-    <div  >
+    <div className="election-list">
       {
         item.map(item=>{
           return (<Electionitem item = {item}/>)

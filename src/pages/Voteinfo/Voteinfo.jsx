@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
-// import { loginCheck } from "../../store/actions/userActions";
 import Moment from "moment";
 import { loginCheck } from "../../store/actions/userActions";
 import { electioninfo } from "../../store/actions/electionActions";
