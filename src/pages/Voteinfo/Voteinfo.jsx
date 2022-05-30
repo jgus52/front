@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
 import Moment from "moment";
@@ -161,6 +161,14 @@ function Voteinfo() {
                     unfilledBackground="#8393bf"
                   ></ProgressBar>
                   <div className="space2"></div>
+                  <Link
+                    to={`/vote/${id}`}
+                    className="button-submit"
+                    style={{ textDecoration: "none" }}
+                    type="submit"
+                  >
+                    투표 참여하기
+                  </Link>
                 </div>
               </>
             );
