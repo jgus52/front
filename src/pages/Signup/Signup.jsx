@@ -19,13 +19,13 @@ const Signup = ({history}) => {
     const [formError, setFormError] = useState('')
     const [modalOpen, setModalOpen] = useState('close')
 
-    const { loading, success, error, } = useSelector(state=>state.user)
+    const { loading, success, error, authNum } = useSelector(state=>state.user)
 
     const dispatch = useDispatch()
 
-    // const sendemail= () => {
-    //    dispatch(usersendmail(email));
-    // }
+    const sendemail= () => {
+       dispatch(usersendmail(email));
+    }
 
     var CryptoJS = require("crypto-js");
     
@@ -35,7 +35,8 @@ const Signup = ({history}) => {
         console.log(ciphernum);
 
         const submittednumber= {
-            number: ciphernum 
+            number: ciphernum,
+            authNum: authNum
         }
 
         dispatch(usercertification(submittednumber));
@@ -58,10 +59,10 @@ const Signup = ({history}) => {
             setFormError("올바른 이메일 형식이 아닙니다")
             return
         }
-        // if(!usercertification) {
-        //     setFormError("사용자 인증을 하지 않으셨습니다.")
-        //     return
-        //   }
+        if(!usercertification) {
+            setFormError("사용자 인증을 하지 않으셨습니다.")
+            return
+          }
         if(!checkPasswordValidation(password)){
           setFormError("비밀번호는 숫자, 영어, 특수문자를. 포함하며 8자 이상이어야 합니다")
           return
@@ -143,7 +144,7 @@ const Signup = ({history}) => {
                                 spellCheck={false}
                                 onChange={(e)=>setEmail(e.target.value)}
                             />
-                            <Button text="인증 번호 전송" size="16px" color="#ffffff" //onClick={sendemail}/>
+                            <Button text="인증 번호 전송" size="16px" color="#ffffff" onClick={sendemail}/>
                             />
                         </div>
 
@@ -156,7 +157,7 @@ const Signup = ({history}) => {
                                 onChange={handleNumberInputChange}
                             />
                             <Button text="확인" size="16px" color="#ffffff" onClick={()=>certification(certificationNumber)}/>
-                            {/* <Button text="재전송" size="16px" color="#ffffff" onClick={sendemail}/> */}
+                            <Button text="재전송" size="16px" color="#ffffff" onClick={sendemail}/>
                         </div>
 
                         <div className="signup-password-container">

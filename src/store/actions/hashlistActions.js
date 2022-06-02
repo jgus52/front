@@ -1,6 +1,6 @@
 import { MY_HASHLIST_REQUEST, MY_HASHLIST_SUCCESS, MY_HASHLIST_FAIL, ALL_HASHLIST_REQUEST, ALL_HASHLIST_SUCCESS, ALL_HASHLIST_FAIL } from "../constants/hashlistConstants"
 
-export const myhash = () => async (dispatch) => {
+export const myhash = (id) => async (dispatch) => {
     try {
       dispatch({ type: MY_HASHLIST_REQUEST })
   
@@ -14,7 +14,7 @@ export const myhash = () => async (dispatch) => {
         },
       }
   
-      const res = await fetch(`https://uosvote.tk/election/myballot/38`, config)
+      const res = await fetch(`https://uosvote.tk/election/myballot/${id}`, config)
       const myhash = await res.json();
     
       if(res.status === 200) {
@@ -34,7 +34,7 @@ export const myhash = () => async (dispatch) => {
     }
   }
 
-  export const allhash = () => async (dispatch) => {
+  export const allhash = (id) => async (dispatch) => {
     try {
       dispatch({ type: ALL_HASHLIST_REQUEST })
   
@@ -48,7 +48,7 @@ export const myhash = () => async (dispatch) => {
         },
       }
   
-      const res = await fetch(`https://uosvote.tk/election/ballot/38`, config)  
+      const res = await fetch(`https://uosvote.tk/election/ballot/${id}`, config)  
       const allhash = await res.json();
     
       if(res.status === 200) {
