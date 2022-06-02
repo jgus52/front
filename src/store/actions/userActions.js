@@ -52,17 +52,13 @@ export const usersendmail= (email) => async (dispatch) => {
     }
 
     const res = await fetch(`https://uosvote.tk/auth/sendmail`, config)
-
     const data = await res.json();
-
-    if (data.accessToken !== null&&data.accessToken !== undefined) {
-      localStorage.setItem("accessToken", data.accessToken);
-    }
 
     if(res.status === 201) {
       dispatch({
         type: USER_SENDMAIL_SUCCESS,
-        success: "인증 번호가 전송되었습니다."
+        success: "인증 번호가 전송되었습니다.",
+        data: data.authNum
       })
     } else if(res.status === 409){
       dispatch({
@@ -90,8 +86,7 @@ export const usercertification = (submittednumber) => async (dispatch) => {
       headers:{
         'Content-Type': 'application/json',
         Accept: "application/json",
-        authorization: 
-          "Bearer " + localStorage.getItem("Cookie"),
+        
       },
       body:JSON.stringify(submittednumber)
     }

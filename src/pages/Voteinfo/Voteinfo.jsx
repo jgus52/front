@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
 import Moment from "moment";
 import { loginCheck } from "../../store/actions/userActions";
-import { electioninfo } from "../../store/actions/electionActions";
+import { electioninfo, electioncheck } from "../../store/actions/electionActions";
 
 import "./Voteinfo.scss";
 
@@ -14,9 +14,7 @@ function Voteinfo() {
   const dispatch = useDispatch();
 
   const { isLogin } = useSelector((state) => state.user);
-  const { electionloading, electionlist } = useSelector(
-    (state) => state.election
-  );
+  const { electionloading, electionlist, iselection } = useSelector((state) => state.election);
 
   const now = 71;
 
@@ -24,6 +22,10 @@ function Voteinfo() {
     if (localStorage.getItem("accessToken") !== null) {
       dispatch(loginCheck());
     }
+  }
+
+  if (!iselection) {
+    dispatch(electioncheck());
   }
 
   useEffect(() => {

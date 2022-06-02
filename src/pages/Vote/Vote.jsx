@@ -50,6 +50,7 @@ function Vote() {
     //todo 암호화 하기 + 서버에 전송
     console.log("lala");
   };
+
   return (
     <>
       {modal3Visible && (
@@ -66,10 +67,11 @@ function Vote() {
           electionlist.map((data) => {
             if (data.id == id) {
               let candidateContent = [];
+              console.log(data.candidates);
               for (let i = 0; i < data.candidates.length; i++) {
                 let selFlag = i == selected;
                 candidateContent.push(
-                  <div key={data.candidates[i].candidateNumber}>
+                  <div className = "candidate-info" key={data.candidates[i].candidateNumber}>
                     <div className="candidate-name">
                       {data.candidates[i].candidateNumber +
                         ". " +
@@ -121,7 +123,7 @@ function Vote() {
                   </div>
                   <div className="title">후보 정보</div>
                   <div className="border"></div>
-                  <div className="info">{candidateContent}</div>
+                  <div className="info2">{candidateContent}</div>
                   <form className="center">
                     <div className="space2"></div>
                     <div>
@@ -165,3 +167,12 @@ function Vote() {
   );
 }
 export default Vote;
+
+
+{/* <Grid container spacing={3} className="info_container">
+                      {candidateContent.map((c) => (
+						            <Grid item xs={3}>
+                          {candidateContent.name}
+						            </Grid>
+					            ))}
+                    </Grid> */}

@@ -2,20 +2,22 @@ import React, { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { myhash, allhash } from "../../store/actions/hashlistActions";
+import { useParams } from "react-router-dom";
 import './VoteVerification.scss'
 
 const VoteVerification = () => {
 
     const { myhashloading, myhashlist, allhashloading, allhashlist} = useSelector(state=>state.hashlist)
     const dispatch = useDispatch()
+    const {id} = useParams();
 
     useEffect(()=>{
         if(!myhashloading){
-            dispatch(myhash())
+            dispatch(myhash(id))
         }
 
         if(!allhashloading){
-            dispatch(allhash())
+            dispatch(allhash(id))
         }
         
     },[])
@@ -34,14 +36,12 @@ const VoteVerification = () => {
                             <span>동형 알고리즘(HEAAN)</span>
                         </Link> 
                         을 이용하여 합산한 암호문 입니다.)</p>
-                    <p className="hash-info">해쉬 정보 미리보기</p>
                 </div>  
                 <div className="hash-list">
                     <div className="hash-list-components">
-                        <a target="_blank" href={`https://gateway.pinata.cloud/ipfs/${testhashlist[0].hashsite}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
-                            <span className="hash-site">{testhashlist[0].hashsite}</span>
+                        <a className="hash-site" target="_blank" href={`https://gateway.pinata.cloud/ipfs/${testhashlist[0].hashsite}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
+                            <span >https://gateway.pinata.cloud/ipfs/{testhashlist[0].hashsite}</span>
                         </a>
-                        <span className="hash">{testhashlist[0].hash}</span>
                     </div>
                 </div>
             </div>
@@ -49,11 +49,12 @@ const VoteVerification = () => {
             <div>
                 <div className="hash-list-title">
                     <p className="hash-site-name2">사용자가 투표한 해쉬 주소</p>
-                    <p className="hash-info2">해쉬 정보 미리보기</p>
                 </div>  
                 <div className="hash-list">
                     <div className="hash-list-components">
-                        <span className="hash-site">{myhashlist.ballotHash}</span>
+                        <a className="hash-site" target="_blank" href={`https://gateway.pinata.cloud/ipfs/${myhashlist.ballotHash}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
+                            <span >https://gateway.pinata.cloud/ipfs/{myhashlist.ballotHash}</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -61,7 +62,6 @@ const VoteVerification = () => {
             <div>
                 <div className="hash-list-title">
                     <p className="hash-site-name2">전체 투표 해쉬 주소</p>
-                    <p className="hash-info2">해쉬 정보 미리보기</p>
                 </div>  
                 <div className="hash-list">
                     {
@@ -69,8 +69,9 @@ const VoteVerification = () => {
                             return (
                                 <div key={index}>
                                     <div className="hash-list-components">
-                                        <span className="hash-site">{allhashlist.ElectionId}</span>
-                                        <span className="hash">{allhashlist.BallotHash}</span>
+                                        <a className="hash-site" target="_blank" href={`https://gateway.pinata.cloud/ipfs/${allhashlist.BallotHash}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
+                                            <span>https://gateway.pinata.cloud/ipfs/{allhashlist.BallotHash}</span>
+                                        </a>
                                     </div>
                                 </div>
                             )
