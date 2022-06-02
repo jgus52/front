@@ -1,17 +1,35 @@
 import React, { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
-import { myhash, allhash } from "../../store/actions/hashlistActions";
+import { myhash, allhash, sumhash } from "../../store/actions/hashlistActions";
 import { useParams } from "react-router-dom";
+import { electioncheck } from "../../store/actions/electionActions";
+import { loginCheck } from "../../store/actions/userActions";
 import './VoteVerification.scss'
 
 const VoteVerification = () => {
 
-    const { myhashloading, myhashlist, allhashloading, allhashlist} = useSelector(state=>state.hashlist)
+    const { isLogin } = useSelector(state=>state.user)
+    const { iselection } = useSelector((state) => state.election);
+    const { myhashloading, myhashlist, allhashloading, allhashlist, sumhashloading, sumhashlist} = useSelector(state=>state.hashlist)
     const dispatch = useDispatch()
     const {id} = useParams();
 
+    if(!isLogin){
+        if(localStorage.getItem("accessToken")!==null){
+            dispatch(loginCheck())
+        }
+    }
+
+    if (!iselection) {
+        dispatch(electioncheck());
+    }
+
     useEffect(()=>{
+        if(!sumhashloading){
+            dispatch(sumhash(id))
+        }
+
         if(!myhashloading){
             dispatch(myhash(id))
         }
@@ -21,10 +39,6 @@ const VoteVerification = () => {
         }
         
     },[])
-
-    const testhashlist = [
-        {id:1, hashsite: "QmdQvg3uDjj13HcGY5stjqYfQu31FFpRBTKYsmYAFtcAj7", hash: "QmTDfwTbTkq8k36wPcpAaJWKgUkdmfUF" },
-    ]
 
     return (
         <>
@@ -39,8 +53,8 @@ const VoteVerification = () => {
                 </div>  
                 <div className="hash-list">
                     <div className="hash-list-components">
-                        <a className="hash-site" target="_blank" href={`https://gateway.pinata.cloud/ipfs/${testhashlist[0].hashsite}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
-                            <span >https://gateway.pinata.cloud/ipfs/{testhashlist[0].hashsite}</span>
+                        <a className="hash-site" target="_blank" href={`https://gateway.pinata.cloud/ipfs/${sumhashlist.hashsite}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
+                            <span >https://gateway.pinata.cloud/ipfs/{sumhashlist.hashsite}</span>
                         </a>
                     </div>
                 </div>
