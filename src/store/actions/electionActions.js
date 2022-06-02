@@ -1,4 +1,4 @@
-import { ELECTIONLIST_REQUEST, ELECTIONLIST_SUCCESS, ELECTIONLIST_FAIL } from "../constants/electionConstants"
+import { ELECTIONLIST_REQUEST, ELECTIONLIST_SUCCESS, ELECTIONLIST_FAIL, ELECTIONLIST_CHECK, ELECTIONLIST_CHECK_OUT } from "../constants/electionConstants"
 
 export const electioninfo = () => async (dispatch) => {
     try {
@@ -31,4 +31,12 @@ export const electioninfo = () => async (dispatch) => {
           error: "에러가 발생했습니다. 다시 시도해주세요" 
         })
     }
+}
+
+export const electioncheck= () => (dispatch) => {
+  dispatch({ type: ELECTIONLIST_CHECK })
+}
+
+export const electioncheckout= () => (dispatch) => {
+  dispatch({ type: ELECTIONLIST_CHECK_OUT })
 }

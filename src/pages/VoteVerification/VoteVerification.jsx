@@ -24,13 +24,6 @@ const VoteVerification = () => {
 
     const testhashlist = [
         {id:1, hashsite: "QmdQvg3uDjj13HcGY5stjqYfQu31FFpRBTKYsmYAFtcAj7", hash: "QmTDfwTbTkq8k36wPcpAaJWKgUkdmfUF" },
-        {id:2, hashsite: "QmdQvg3uDjj13HcGY5stjqYfQu31FFpRBTKYsmYAFtcAj7", hash: "QmTDfwTbTkq8k36wPcpAaJWKgUkdmfUF" },
-        {id:3, hashsite: "QmdQvg3uDjj13HcGY5stjqYfQu31FFpRBTKYsmYAFtcAj7", hash: "QmTDfwTbTkq8k36wPcpAaJWKgUkdmfUF" },
-        {id:4, hashsite: "QmdQvg3uDjj13HcGY5stjqYfQu31FFpRBTKYsmYAFtcAj7", hash: "QmTDfwTbTkq8k36wPcpAaJWKgUkdmfUF" },
-        {id:5, hashsite: "QmdQvg3uDjj13HcGY5stjqYfQu31FFpRBTKYsmYAFtcAj7", hash: "QmTDfwTbTkq8k36wPcpAaJWKgUkdmfUF" },
-        {id:6, hashsite: "QmdQvg3uDjj13HcGY5stjqYfQu31FFpRBTKYsmYAFtcAj7", hash: "QmTDfwTbTkq8k36wPcpAaJWKgUkdmfUF" },
-        {id:7, hashsite: "QmdQvg3uDjj13HcGY5stjqYfQu31FFpRBTKYsmYAFtcAj7", hash: "QmTDfwTbTkq8k36wPcpAaJWKgUkdmfUF" },
-        {id:8, hashsite: "QmdQvg3uDjj13HcGY5stjqYfQu31FFpRBTKYsmYAFtcAj7", hash: "QmTDfwTbTkq8k36wPcpAaJWKgUkdmfUF" },
     ]
 
     return (
