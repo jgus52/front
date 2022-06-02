@@ -1,4 +1,4 @@
-import { MY_HASHLIST_REQUEST, MY_HASHLIST_SUCCESS, MY_HASHLIST_FAIL, ALL_HASHLIST_REQUEST, ALL_HASHLIST_SUCCESS, ALL_HASHLIST_FAIL } from "../constants/hashlistConstants"
+import { MY_HASHLIST_REQUEST, MY_HASHLIST_SUCCESS, MY_HASHLIST_FAIL, ALL_HASHLIST_REQUEST, ALL_HASHLIST_SUCCESS, ALL_HASHLIST_FAIL, HASHLIST_SUM_REQUEST, HASHLIST_SUM_SUCCESS, HASHLIST_SUM_FAIL} from "../constants/hashlistConstants"
 
 export const myhash = (id) => async (dispatch) => {
     try {
@@ -34,7 +34,7 @@ export const myhash = (id) => async (dispatch) => {
     }
   }
 
-  export const allhash = (id) => async (dispatch) => {
+export const allhash = (id) => async (dispatch) => {
     try {
       dispatch({ type: ALL_HASHLIST_REQUEST })
   
@@ -66,4 +66,38 @@ export const myhash = (id) => async (dispatch) => {
           error: "에러가 발생했습니다. 다시 시도해주세요" 
         })
     }
+}
+
+export const sumhash = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: HASHLIST_SUM_REQUEST })
+
+    const config = {
+      method:'GET',
+      headers:{
+        'Content-Type': 'application/json',
+        Accept: "application/json",
+        authorization: 
+        "Bearer " + localStorage.getItem("accessToken"),
+      },
+    }
+
+    const res = await fetch(`https://uosvote.tk/election/result/${id}`, config)
+    const sumhash = await res.json();
+  
+    if(res.status === 200) {
+      dispatch({
+        type: HASHLIST_SUM_SUCCESS,
+        data: sumhash
+      });
+    } else {
+      throw new Error()
+    }
+
+  } catch (err) {
+    dispatch({
+        type: HASHLIST_SUM_FAIL,
+        error: "에러가 발생했습니다. 다시 시도해주세요" 
+      })
   }
+}
