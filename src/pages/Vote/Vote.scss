@@ -41,53 +41,58 @@
       }
     }
   }
-  .candidate-center {
-    width: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    .candidate-profile {
-      height: 200px;
+  .candidate-info{
+    width: 25%;
+
+    .candidate-center {
+      width: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      .candidate-profile {
+        height: 200px;
+      }
+      .candidate-submit {
+        margin-top: 8px;
+        margin-bottom: 12px;
+        width: 120px;
+        height: 40px;
+        font-weight: 700;
+        font-size: 18px;
+
+        line-height: 31px;
+        text-align: center;
+
+        background: #ffffff;
+        border: 2px solid #06287f;
+        border-radius: 8px;
+      }
+      .candidate-submit-selected {
+        margin-top: 8px;
+        margin-bottom: 12px;
+        width: 120px;
+        height: 40px;
+        font-weight: 700;
+        font-size: 18px;
+
+        line-height: 31px;
+        text-align: center;
+
+        color: #ffffff;
+        background: #06287f;
+        border: 2px solid #06287f;
+        border-radius: 8px;
+      }
     }
-    .candidate-submit {
-      margin-top: 8px;
-      margin-bottom: 12px;
-      width: 120px;
-      height: 40px;
+
+    .candidate-name {
       font-weight: 700;
       font-size: 18px;
-
-      line-height: 31px;
-      text-align: center;
-
-      background: #ffffff;
-      border: 2px solid #06287f;
-      border-radius: 8px;
+      margin-bottom: 14px;
     }
-    .candidate-submit-selected {
-      margin-top: 8px;
-      margin-bottom: 12px;
-      width: 120px;
-      height: 40px;
-      font-weight: 700;
-      font-size: 18px;
-
-      line-height: 31px;
-      text-align: center;
-
-      color: #ffffff;
-      background: #06287f;
-      border: 2px solid #06287f;
-      border-radius: 8px;
-    }
-  }
-
-  .candidate-name {
-    font-weight: 700;
-    font-size: 18px;
-    margin-bottom: 14px;
-  }
+  } 
 
   .center {
     display: flex;
@@ -163,6 +168,14 @@
     padding-left: 14px;
     font-size: 16px;
 
+    white-space: pre-line;
+  }
+
+  .info2 {
+    display: flex;
+    flex-flow:row wrap;
+    padding-left: 14px;
+    font-size: 16px;
     white-space: pre-line;
   }
 }
