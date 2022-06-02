@@ -35,6 +35,8 @@ export const myhash = (id) => async (dispatch) => {
     var myhash = [];
     myhash = await res.json();
 
+    console.log("tlqkf5");
+
     if (res.status === 200) {
       console.log("inlist" + myhash.ballotHash);
       dispatch({
@@ -79,8 +81,8 @@ export const allhash = (id) => async (dispatch) => {
     }
   } catch (err) {
     dispatch({
-      type: ALL_HASHLIST_SUCCESS,
-      data: allhash,
+      type: ALL_HASHLIST_FAIL,
+      error: "에러가 발생했습니다. 다시 시도해주세요",
     });
   }
 };

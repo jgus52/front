@@ -171,7 +171,11 @@ function Voteinfo() {
                   ></ProgressBar>
                   <div className="space2"></div>
                   <Link
-                    to={`/vote/${id}`}
+                    to={
+                      typeof myhashlist.ballotHash == "undefined"
+                        ? `/vote/${id}`
+                        : `/voteverification/${id}`
+                    }
                     className="button-submit"
                     style={{ textDecoration: "none" }}
                     type="submit"
