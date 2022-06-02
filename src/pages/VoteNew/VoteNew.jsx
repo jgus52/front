@@ -56,13 +56,13 @@ const VoteNew = ({ history }) => {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(candidates);
     fetch("https://uosvote.tk/election/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYXJlNTAyQHVvcy5hYy5rciIsImlhdCI6MTY1MjY3NTA0OH0.PD4D6kzkOSNr3QErG5_T7Lui8HA0ItdToJaNdKFnToc",
+        authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
       body: JSON.stringify({
         createElectionDTO: {

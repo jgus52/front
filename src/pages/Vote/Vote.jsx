@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import Moment from "moment";
 import { loginCheck } from "../../store/actions/userActions";
 import { electioninfo } from "../../store/actions/electionActions";
@@ -9,9 +9,10 @@ import Modal3 from "../../components/Modal/Modal3";
 
 import "./Vote.scss";
 
-function Vote() {
+function Vote({}) {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
   const [selected, setSelected] = useState(-1);
   const [modal3Visible, setModal3Visible] = useState(false);
   const [agree, setAgree] = useState(false);
@@ -46,8 +47,24 @@ function Vote() {
     setAgree(true);
   };
 
-  const handlesubmit = () => {
-    //todo 암호화 하기 + 서버에 전송
+  const handlesubmit = (e) => {
+    e.preventDefault();
+    fetch("https://uosvote.tk/election/" + id, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      body: JSON.stringify({
+        selected: selected,
+      }),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+      });
+    history.goBack();
     console.log("lala");
   };
 
@@ -71,7 +88,10 @@ function Vote() {
               for (let i = 0; i < data.candidates.length; i++) {
                 let selFlag = i == selected;
                 candidateContent.push(
-                  <div className = "candidate-info" key={data.candidates[i].candidateNumber}>
+                  <div
+                    className="candidate-info"
+                    key={data.candidates[i].candidateNumber}
+                  >
                     <div className="candidate-name">
                       {data.candidates[i].candidateNumber +
                         ". " +
@@ -124,7 +144,7 @@ function Vote() {
                   <div className="title">후보 정보</div>
                   <div className="border"></div>
                   <div className="info2">{candidateContent}</div>
-                  <form className="center">
+                  <form className="center" onSubmit={handlesubmit}>
                     <div className="space2"></div>
                     <div>
                       <input
@@ -152,7 +172,6 @@ function Vote() {
                           : "button-submit-unactive"
                       }
                       type="submit"
-                      onSubmit={handlesubmit}
                       disabled={selected == -1}
                     >
                       {selected > -1 ? "결과 제출하기" : "후보를 선택해 주세요"}
@@ -168,11 +187,12 @@ function Vote() {
 }
 export default Vote;
 
-
-{/* <Grid container spacing={3} className="info_container">
+{
+  /* <Grid container spacing={3} className="info_container">
                       {candidateContent.map((c) => (
 						            <Grid item xs={3}>
                           {candidateContent.name}
 						            </Grid>
 					            ))}
-                    </Grid> */}
+                    </Grid> */
+}
