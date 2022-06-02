@@ -3,9 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
+import { myhash } from "../../store/actions/hashlistActions";
 import Moment from "moment";
 import { loginCheck } from "../../store/actions/userActions";
-import { electioninfo, electioncheck } from "../../store/actions/electionActions";
+import {
+  electioninfo,
+  electioncheck,
+} from "../../store/actions/electionActions";
 
 import "./Voteinfo.scss";
 
@@ -14,9 +18,10 @@ function Voteinfo() {
   const dispatch = useDispatch();
 
   const { isLogin } = useSelector((state) => state.user);
-  const { electionloading, electionlist, iselection } = useSelector((state) => state.election);
-
-  const now = 71;
+  const { electionloading, electionlist, iselection } = useSelector(
+    (state) => state.election
+  );
+  const { myhashloading, myhashlist } = useSelector((state) => state.hashlist);
 
   if (!isLogin) {
     if (localStorage.getItem("accessToken") !== null) {
@@ -30,8 +35,10 @@ function Voteinfo() {
 
   useEffect(() => {
     if (!electionloading) {
-      console.log("electionloading" + id);
       dispatch(electioninfo());
+    }
+    if (!myhashloading) {
+      dispatch(myhash(id));
     }
   }, []);
 
@@ -45,6 +52,8 @@ function Voteinfo() {
 
       {electionlist.length > 0 &&
         electionlist.map((data) => {
+          console.log("lala" + typeof myhashlist + myhashlist.ballotHash);
+          console.log(typeof myhashlist.ballotHash == "undefined");
           if (data.id == id) {
             let fullRange, nowRange;
 
@@ -69,10 +78,7 @@ function Voteinfo() {
                 </div>
               );
               fullRange = new Date(data.endDate) - new Date(data.startDate);
-              console.log("lalala" + fullRange);
               nowRange = new Date() - new Date(data.startDate);
-              console.log("hahaha" + nowRange);
-              console.log("kakaak" + (nowRange / fullRange) * 100);
             }
             return (
               <>
@@ -118,13 +124,14 @@ function Voteinfo() {
                       정족수({data.quorum}명)
                     </div>
                     <div className="center-info">
-                      {(now / data.total) * 100}%({now}명/
+                      {((data.now / data.total) * 100).toFixed(1)}%({data.now}
+                      명/
                       {data.total}명)
                     </div>
                   </div>
                   <ProgressBar
                     width={800}
-                    percent={(now / data.total) * 100}
+                    percent={(data.now / data.total) * 100}
                     stepPositions={[(data.quorum / data.total) * 100]}
                     filledBackground="linear-gradient(to right, #06287f, #06287f)"
                     unfilledBackground="#8393bf"
@@ -169,7 +176,9 @@ function Voteinfo() {
                     style={{ textDecoration: "none" }}
                     type="submit"
                   >
-                    투표 참여하기
+                    {typeof myhashlist.ballotHash == "undefined"
+                      ? "투표 참여하기"
+                      : "투표 해쉬 정보 확인하기"}
                   </Link>
                 </div>
               </>
