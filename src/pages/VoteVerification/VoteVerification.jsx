@@ -53,8 +53,8 @@ const VoteVerification = () => {
                 </div>  
                 <div className="hash-list">
                     <div className="hash-list-components">
-                        <a className="hash-site" target="_blank" href={`https://gateway.pinata.cloud/ipfs/${sumhashlist.hashsite}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
-                            <span >https://gateway.pinata.cloud/ipfs/{sumhashlist.hashsite}</span>
+                        <a className="hash-site" target="_blank" href={`https://gateway.pinata.cloud/ipfs/${sumhashlist.result}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
+                            <span >https://gateway.pinata.cloud/ipfs/{sumhashlist.result}</span>
                         </a>
                     </div>
                 </div>
