@@ -7,7 +7,7 @@ import { myhash } from "../../store/actions/hashlistActions";
 import Moment from "moment";
 import { loginCheck } from "../../store/actions/userActions";
 import {
-  electioninfo,
+  myelectioninfo,
   electioncheck,
 } from "../../store/actions/electionActions";
 
@@ -18,7 +18,7 @@ function Voteinfo() {
   const dispatch = useDispatch();
 
   const { isLogin } = useSelector((state) => state.user);
-  const { electionloading, electionlist, iselection } = useSelector(
+  const { myelectionloading, myelection, iselection } = useSelector(
     (state) => state.election
   );
   const { myhashloading, myhashlist } = useSelector((state) => state.hashlist);
@@ -34,24 +34,26 @@ function Voteinfo() {
   }
 
   useEffect(() => {
-    if (!electionloading) {
-      dispatch(electioninfo());
+    if (!myelectionloading) {
+      dispatch(myelectioninfo(id));
     }
     if (!myhashloading) {
       dispatch(myhash(id));
     }
   }, []);
 
+  console.log(myelection);
+
   return (
     <div className="voteinfo">
-      {electionlist.length == 0 && (
+      {myelection.length == 0 && (
         <div className="election-list-none">
           <p>해당 정보를 다시 불러오고 있습니다.</p>
         </div>
       )}
 
-      {electionlist.length > 0 &&
-        electionlist.map((data) => {
+      {myelection.length > 0 &&
+        myelection.map((data) => {
           console.log("lala" + typeof myhashlist + myhashlist.ballotHash);
           console.log(typeof myhashlist.ballotHash == "undefined");
           if (data.id == id) {
