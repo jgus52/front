@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import "./Modal3.scss";
 
 const Modal3 = (props) => {

@@ -6,7 +6,6 @@ import Modal2 from "../../components/Modal/Modal2";
 import Modal3 from "../../components/Modal/Modal3";
 
 import "react-datepicker/dist/react-datepicker.css";
-import img from "../../img/1619702385.jpg";
 import profileAdd from "../../img/profile_add.svg";
 
 import { ko } from "date-fns/esm/locale";

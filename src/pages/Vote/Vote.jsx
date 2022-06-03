@@ -12,7 +12,7 @@ import Modal3 from "../../components/Modal/Modal3";
 
 import "./Vote.scss";
 
-function Vote({}) {
+function Vote() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
