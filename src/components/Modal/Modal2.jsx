@@ -52,7 +52,11 @@ const Modal2 = (props) => {
         <div className="space" />
         <p>후보자 사진</p>
         <div className="border" />
-        <img className="profile-img" src={imgBase64}></img>
+        <img
+          className="profile-img"
+          src={imgBase64}
+          alt={"프로필 이미지"}
+        ></img>
         <div>
           <input
             required
