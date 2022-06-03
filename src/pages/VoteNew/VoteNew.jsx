@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 
 import "./VoteNew.scss";
+import Modal from "../../components/Modal/Modal";
 import Modal2 from "../../components/Modal/Modal2";
 import Modal3 from "../../components/Modal/Modal3";
 
@@ -18,10 +19,18 @@ const VoteNew = ({ history }) => {
   const [quorum, setQuorum] = useState();
   const [electionInfo, setElectionInfo] = useState("");
   const [candidates, setCandidates] = useState([]);
+  const [modalMsg, setModalMsg] = useState("입력값을 확인해 주세요");
+  const [modalOpen, setModalOpen] = useState("close");
   const [modal2Visible, setModal2Visible] = useState(false);
   const [modal3Visible, setModal3Visible] = useState(false);
   const [agree, setAgree] = useState(false);
   const [isSubmitActive, setIsSubmitActive] = useState(false);
+  const openModal = () => {
+    setModalOpen("open");
+  };
+  const closeModal = () => {
+    setModalOpen("close");
+  };
   const openModal2 = () => {
     setModal2Visible(true);
   };
@@ -56,6 +65,35 @@ const VoteNew = ({ history }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(candidates);
+
+    var fullRange = new Date(endTime) - new Date(startTime);
+    var nowRange = new Date() - new Date(startTime);
+    console.log(fullRange);
+    console.log(nowRange);
+    if (nowRange > 0) {
+      setModalMsg("현재보다 이전의 날짜는 선택할 수 없습니다.");
+      openModal();
+      return;
+    } else if (fullRange < 0) {
+      setModalMsg("시작 날짜보다 이전의 종료 날짜는 선택할 수 없습니다.");
+      openModal();
+      return;
+    } else if (total < quorum) {
+      setModalMsg("전체 인원보다 적은 정족수를 설정해 주세요.");
+      openModal();
+      return;
+    }
+
+    var fullRange = new Date(endTime) - new Date(startTime);
+    var nowRange = new Date() - new Date(startTime);
+    if (nowRange < 0) {
+      openModal();
+      return;
+    } else if (fullRange < 0) {
+      openModal();
+      return;
+    }
+
     fetch("https://uosvote.tk/election/", {
       method: "POST",
       headers: {
@@ -100,8 +138,22 @@ const VoteNew = ({ history }) => {
     console.log("modal3");
     setAgree(true);
   };
+  const handleModalClick = () => {
+    setModalOpen((prevState) => "close");
+  };
+
   return (
     <>
+      {modalOpen == "open" && (
+        <Modal
+          modalOpen={modalOpen}
+          buttonText="확인"
+          buttonSize="16px"
+          onClick={handleModalClick}
+        >
+          {modalMsg}
+        </Modal>
+      )}
       {modal2Visible && (
         <Modal2 onClose={closeModal2} onClick={handleModal2Click}></Modal2>
       )}
