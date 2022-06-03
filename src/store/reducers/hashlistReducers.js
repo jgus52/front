@@ -44,7 +44,6 @@ const hashlistReducer = (state = initialState, action) => {
         ...state,
         myhashloading: false,
         success: null,
-
         myhashlist: [],
         error: action.error,
       };
