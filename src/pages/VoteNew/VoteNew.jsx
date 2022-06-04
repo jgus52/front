@@ -79,17 +79,9 @@ const VoteNew = ({ history }) => {
       openModal();
       return;
     } else if (total < quorum) {
+      console.log(total);
+      console.log(quorum);
       setModalMsg("전체 인원보다 적은 정족수를 설정해 주세요.");
-      openModal();
-      return;
-    }
-
-    var fullRange = new Date(endTime) - new Date(startTime);
-    var nowRange = new Date() - new Date(startTime);
-    if (nowRange < 0) {
-      openModal();
-      return;
-    } else if (fullRange < 0) {
       openModal();
       return;
     }
