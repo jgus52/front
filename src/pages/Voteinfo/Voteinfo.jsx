@@ -23,9 +23,11 @@ function Voteinfo() {
   );
   const { myhashloading, myhashlist } = useSelector((state) => state.hashlist);
   const [canVote, setCanVote] = useState("before"); // before : 이전, now : 가능, after : 투표 이후
+  const [result, setResult] = useState([]);
   let fullRange, nowRange;
 
   let candidateContent = [];
+  let voteResultContent = [];
 
   if (!isLogin) {
     if (localStorage.getItem("accessToken") !== null) {
@@ -58,24 +60,53 @@ function Voteinfo() {
       setCanVote("now");
     }
   }, [myelection]);
+
   useEffect(() => {
     console.log(canVote);
-    fetch("https://uosvote.tk/election/electionResult/" + id, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        authorization: "Bearer " + localStorage.getItem("accessToken"),
-      },
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response);
-      });
+    try {
+      fetch("https://uosvote.tk/election/electionResult/" + id, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("accessToken"),
+        },
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log(response);
+          setResult(response);
+        });
+    } catch (e) {
+      console.log(e);
+    }
   }, [canVote]);
+  /*
+  useEffect(() => {
+    console.log("result");
+    for (let i = 0; i < result.length; i++) {
+      voteResultContent.push(
+        <div key={i}>
+          <div className="candidate-name">
+            {myelection.candidates[i].candidateNumber +
+              ". " +
+              myelection.candidates[i].candidateName}
+          </div>
+          <img
+            className="candidate-profile"
+            src={myelection.candidates[i].profile}
+            alt="프로필"
+          ></img>
+          <div className="candidate-promise">{Math.round(result[i])}</div>
+          <div className="space"></div>
+        </div>
+      );
+    }
+  }, [result]);
+*/
   console.log(myelection);
 
-  if (typeof myelection.id != "undefined") {
+  if (typeof myelection.id != "undefined" && myelection.id == id) {
     fullRange = new Date(myelection.endDate) - new Date(myelection.startDate);
     nowRange = new Date() - new Date(myelection.startDate);
     for (let i = 0; i < myelection.candidates.length; i++) {
@@ -97,6 +128,44 @@ function Voteinfo() {
           <div className="space"></div>
         </div>
       );
+    }
+    if (canVote == "now") {
+      let top = 0;
+      let color;
+      // 나중에 after로 수정하기
+      for (let i = 0; i < result.length; i++) {
+        color = "#8393bf";
+        if (top <= Math.round(result[i])) {
+          top = Math.round(result[i]);
+          color = "#D50000";
+        }
+        voteResultContent.push(
+          <div key={i} className="center">
+            <div className="center-row">
+              <div className="center-title">
+                {myelection.candidates[i].candidateNumber +
+                  ". " +
+                  myelection.candidates[i].candidateName}
+              </div>
+            </div>
+            <div className="center-row-inner">
+              <div className="center-mark"></div>
+              <div className="center-info">
+                {((Math.round(result[i]) / myelection.total) * 100).toFixed(1)}
+                %( {Math.round(result[i])}
+                명/
+                {myelection.total}명)
+              </div>
+            </div>
+            <ProgressBar
+              width={800}
+              percent={(Math.round(result[i]) / myelection.total) * 100}
+              filledBackground={color}
+              unfilledBackground="#8393bf"
+            ></ProgressBar>
+          </div>
+        );
+      }
     }
   }
 
@@ -206,6 +275,7 @@ function Voteinfo() {
             ) : (
               <div></div>
             )}
+            {voteResultContent}
             {canVote == "after" ? <div>지남ㅇㅇ</div> : <div></div>}
             <div className="space2"></div>
             {canVote == "before" ? (
