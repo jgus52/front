@@ -63,22 +63,24 @@ function Voteinfo() {
 
   useEffect(() => {
     console.log(canVote);
-    try {
-      fetch("https://uosvote.tk/election/electionResult/" + id, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          authorization: "Bearer " + localStorage.getItem("accessToken"),
-        },
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          console.log(response);
-          setResult(response);
-        });
-    } catch (e) {
-      console.log(e);
+    if (canVote == "after") {
+      try {
+        fetch("https://uosvote.tk/election/electionResult/" + id, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+        })
+          .then((response) => response.json())
+          .then((response) => {
+            console.log(response);
+            setResult(response);
+          });
+      } catch (e) {
+        console.log(e);
+      }
     }
   }, [canVote]);
   /*
@@ -129,7 +131,7 @@ function Voteinfo() {
         </div>
       );
     }
-    if (canVote == "now") {
+    if (canVote == "after") {
       let top = 0;
       let color;
       // 나중에 after로 수정하기
@@ -239,9 +241,8 @@ function Voteinfo() {
               <Step transition="scale">
                 {({ accomplished, index }) => (
                   <div
-                    className={`indexedStep ${
-                      accomplished ? "accomplished" : ""
-                    }`}
+                    className={`indexedStep ${accomplished ? "accomplished" : ""
+                      }`}
                     style={{
                       display: "flex",
                       justifyContent: "center",
@@ -276,7 +277,6 @@ function Voteinfo() {
               <div></div>
             )}
             {voteResultContent}
-            {canVote == "after" ? <div>지남ㅇㅇ</div> : <div></div>}
             <div className="space2"></div>
             {canVote == "before" ? (
               <div className="button-submit-unactive">

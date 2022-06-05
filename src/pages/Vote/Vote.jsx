@@ -110,6 +110,7 @@ function Vote() {
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
+        console.log("sel:" + selected);
       });
     history.goBack();
     console.log("lala");
@@ -189,9 +190,9 @@ export default Vote;
 {
   /* <Grid container spacing={3} className="info_container">
                       {candidateContent.map((c) => (
-						            <Grid item xs={3}>
+                        <Grid item xs={3}>
                           {candidateContent.name}
-						            </Grid>
-					            ))}
+                        </Grid>
+                      ))}
                     </Grid> */
 }

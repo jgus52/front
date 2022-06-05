@@ -78,7 +78,7 @@ const VoteNew = ({ history }) => {
       setModalMsg("시작 날짜보다 이전의 종료 날짜는 선택할 수 없습니다.");
       openModal();
       return;
-    } else if (total < quorum) {
+    } else if (parseInt(total) < parseInt(quorum)) {
       console.log(total);
       console.log(quorum);
       setModalMsg("전체 인원보다 적은 정족수를 설정해 주세요.");
