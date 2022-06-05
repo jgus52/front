@@ -134,9 +134,9 @@ function Voteinfo() {
     if (canVote == "after") {
       let top = 0;
       let color;
-      // 나중에 after로 수정하기
       for (let i = 0; i < result.length; i++) {
-        color = "#8393bf";
+        console.log((Math.round(result[i]) / myelection.total) * 100);
+        color = "#06287f";
         if (top <= Math.round(result[i])) {
           top = Math.round(result[i]);
           color = "#D50000";
@@ -241,8 +241,9 @@ function Voteinfo() {
               <Step transition="scale">
                 {({ accomplished, index }) => (
                   <div
-                    className={`indexedStep ${accomplished ? "accomplished" : ""
-                      }`}
+                    className={`indexedStep ${
+                      accomplished ? "accomplished" : ""
+                    }`}
                     style={{
                       display: "flex",
                       justifyContent: "center",
@@ -255,7 +256,7 @@ function Voteinfo() {
                 )}
               </Step>
             </ProgressBar>
-            {canVote == "now" ? (
+            {canVote == "now" && (
               <>
                 <div className="center-row">
                   <div className="center-title">남은 투표 기간</div>
@@ -272,30 +273,37 @@ function Voteinfo() {
                   filledBackground="linear-gradient(to right, #06287f, #06287f)"
                   unfilledBackground="#8393bf"
                 ></ProgressBar>
+                <Link
+                  to={
+                    typeof myhashlist.ballotHash == "undefined"
+                      ? `/vote/${id}`
+                      : `/voteverification/${id}`
+                  }
+                  className="button-submit"
+                  style={{ textDecoration: "none" }}
+                  type="submit"
+                >
+                  {typeof myhashlist.ballotHash == "undefined"
+                    ? "투표 참여하기"
+                    : "투표 해쉬 정보 확인하기"}
+                </Link>
               </>
-            ) : (
-              <div></div>
             )}
             {voteResultContent}
             <div className="space2"></div>
-            {canVote == "before" ? (
+            {canVote == "before" && (
               <div className="button-submit-unactive">
                 아직 투표를 참여할 수 없습니다.
               </div>
-            ) : (
+            )}
+            {canVote == "after" && (
               <Link
-                to={
-                  typeof myhashlist.ballotHash == "undefined"
-                    ? `/vote/${id}`
-                    : `/voteverification/${id}`
-                }
+                to={`/voteverification/${id}`}
                 className="button-submit"
                 style={{ textDecoration: "none" }}
                 type="submit"
               >
-                {typeof myhashlist.ballotHash == "undefined"
-                  ? "투표 참여하기"
-                  : "투표 해쉬 정보 확인하기"}
+                {"투표 해쉬 정보 확인하기"}
               </Link>
             )}
           </div>

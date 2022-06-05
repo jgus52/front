@@ -50,7 +50,6 @@ const VoteNew = ({ history }) => {
       <div key={candidates[i].number}>
         <div className="candidate-name">
           {candidates[i].number + ". " + candidates[i].candidateName}
-          <button></button>
         </div>
         <img
           className="candidate-profile"

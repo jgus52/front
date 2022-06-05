@@ -104,7 +104,7 @@ function Vote() {
         authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
       body: JSON.stringify({
-        selected: selected,
+        selected: parseInt(selected + 1),
       }),
     })
       .then((response) => response.json())
