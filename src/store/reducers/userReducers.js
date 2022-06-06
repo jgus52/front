@@ -6,6 +6,7 @@ const initialState = {
     error: null,
     isLogin: false,
     isUsercertification: false,
+    issendmail: false,
     authNum:[],
 }
 

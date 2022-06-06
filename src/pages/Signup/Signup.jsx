@@ -16,12 +16,11 @@ const Signup = ({history}) => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setconfirmPassword] = useState('')
     const [certificationNumber, setcertificationNumber] = useState('')
-    const [issave, setissave] = useState(false)
     const [formError, setFormError] = useState('')
     const [modalOpen, setModalOpen] = useState('close')
 
 
-    const { loading, success, error, authNum, isUsercertification} = useSelector(state=>state.user)
+    const { loading, success, error, authNum, isUsercertification, issendmail} = useSelector(state=>state.user)
 
     const dispatch = useDispatch()
 
@@ -47,12 +46,11 @@ const Signup = ({history}) => {
             console.log(ciphernum);
 
             const submittednumber= {
-                number: ciphernum,
-                authNum: authNum
+                code: ciphernum,
+                authNumHash: authNum
             }
             dispatch(usercertification(submittednumber));
         }
-        setissave(true);
     }
 
     const handleNumberInputChange = (e) => {
@@ -156,7 +154,7 @@ const Signup = ({history}) => {
                                 value={email}
                                 spellCheck={false}
                                 onChange={(e)=>setEmail(e.target.value)}
-                                readOnly={isUsercertification ? true : false}
+                                readOnly={issendmail ? true : false}
                             />
                             <Button text="인증 번호 전송" size="16px" color="#ffffff" onClick={sendemail}/>
                         </div>
