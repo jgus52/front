@@ -55,12 +55,14 @@ export const usersendmail= (email) => async (dispatch) => {
     const data = await res.json();
 
     if(res.status === 201) {
+      alert("인증 번호를 전송했습니다.");
       dispatch({
         type: USER_SENDMAIL_SUCCESS,
         success: "인증 번호가 전송되었습니다.",
         data: data.authNum
       })
     } else if(res.status === 409){
+      alert("인증 번호 전송에 실패했습니다.");
       dispatch({
         type: USER_SENDMAIL_FAIL,
         error: "인증 번호 전송에 실패했습니다." 
@@ -86,19 +88,22 @@ export const usercertification = (submittednumber) => async (dispatch) => {
       headers:{
         'Content-Type': 'application/json',
         Accept: "application/json",
-        
       },
       body:JSON.stringify(submittednumber)
     }
+    
+    console.log("submittednumber: ", submittednumber);
 
     const res = await fetch(`https://uosvote.tk/auth/validateMail`, config)
 
     if(res.status === 201) {
+      alert("사용자 인증에 성공했습니다");
       dispatch({
         type: USER_CERTIFICATION_SUCCESS,
         success: "사용자 인증이 완료되었습니다"
       })
     } else if(res.status === 409){
+      alert("사용자 인증에 실패했습니다.");
       dispatch({
         type: USER_CERTIFICATION_FAIL,
         error: "사용자 인증이 실패하였습니다. 입력한 내용을 다시 확인해주세요" 
@@ -129,7 +134,8 @@ export const login = (submittedUserData) => async (dispatch) => {
       body:JSON.stringify(submittedUserData)
     }
 
-    const res = await fetch(`https://uosvote.tk/auth/login`, config)
+    // const res = await fetch(`https://uosvote.tk/auth/login`, config)
+    const res = await fetch(`http://localhost:3001/auth/login`, config)
     const data = await res.json();
 
     if (data.accessToken !== null&&data.accessToken !== undefined) {

@@ -20,6 +20,7 @@ const Signup = ({history}) => {
     const [formError, setFormError] = useState('')
     const [modalOpen, setModalOpen] = useState('close')
 
+
     const { loading, success, error, authNum, isUsercertification} = useSelector(state=>state.user)
 
     const dispatch = useDispatch()
@@ -33,11 +34,11 @@ const Signup = ({history}) => {
         }
     }
 
-
     var CryptoJS = require("crypto-js");
+
+
     
     const certification = (certificationNumber) => {
-
         if(isUsercertification) {
             alert("이미 사용자 인증을 완료하였습니다.");
         }
