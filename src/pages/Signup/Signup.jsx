@@ -156,8 +156,7 @@ const Signup = ({history}) => {
                                 value={email}
                                 spellCheck={false}
                                 onChange={(e)=>setEmail(e.target.value)}
-                                //readOnly={isUsercertification ? true : false}
-                                readOnly={issave ? true : false}
+                                readOnly={isUsercertification ? true : false}
                             />
                             <Button text="인증 번호 전송" size="16px" color="#ffffff" onClick={sendemail}/>
                         </div>
@@ -169,8 +168,7 @@ const Signup = ({history}) => {
                                 value={certificationNumber}
                                 spellCheck={false}
                                 onChange={handleNumberInputChange}
-                                //readOnly={isUsercertification ? true : false}
-                                readOnly={issave ? true : false}
+                                readOnly={isUsercertification ? true : false}
                             />
                             <Button text="확인" size="16px" color="#ffffff" onClick={()=>certification(certificationNumber)}/>
                             <Button text="재전송" size="16px" color="#ffffff" onClick={sendemail}/>
