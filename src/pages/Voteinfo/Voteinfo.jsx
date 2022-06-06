@@ -43,9 +43,7 @@ function Voteinfo() {
     if (!myelectionloading) {
       dispatch(myelectioninfo(id));
     }
-    if (!myhashloading) {
-      dispatch(myhash(id));
-    }
+    dispatch(myhash(id));
   }, []);
   useEffect(() => {
     fullRange = new Date(myelection.endDate) - new Date(myelection.startDate);
@@ -273,6 +271,8 @@ function Voteinfo() {
                   filledBackground="linear-gradient(to right, #06287f, #06287f)"
                   unfilledBackground="#8393bf"
                 ></ProgressBar>
+
+                <div className="space2"></div>
                 <Link
                   to={
                     typeof myhashlist.ballotHash == "undefined"
@@ -290,21 +290,26 @@ function Voteinfo() {
               </>
             )}
             {voteResultContent}
-            <div className="space2"></div>
             {canVote == "before" && (
-              <div className="button-submit-unactive">
-                아직 투표를 참여할 수 없습니다.
-              </div>
+              <>
+                <div className="space2"></div>
+                <div className="button-submit-unactive">
+                  아직 투표를 참여할 수 없습니다.
+                </div>
+              </>
             )}
             {canVote == "after" && (
-              <Link
-                to={`/voteverification/${id}`}
-                className="button-submit"
-                style={{ textDecoration: "none" }}
-                type="submit"
-              >
-                {"투표 해쉬 정보 확인하기"}
-              </Link>
+              <>
+                <div className="space2"></div>
+                <Link
+                  to={`/voteverification/${id}`}
+                  className="button-submit"
+                  style={{ textDecoration: "none" }}
+                  type="submit"
+                >
+                  {"투표 해쉬 정보 확인하기"}
+                </Link>
+              </>
             )}
           </div>
         </>
