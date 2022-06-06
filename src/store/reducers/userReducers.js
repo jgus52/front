@@ -82,11 +82,11 @@ const userReducer = (state = initialState, action) => {
                 success: null,
                 error: null
             }
-        case USER_RESET_CERTIFICATION_NUMBER_CHECK:
-            return {
-                ...state,
-                isUsercertification: false
-            }
+        // case USER_RESET_CERTIFICATION_NUMBER_CHECK:
+        //     return {
+        //         ...state,
+        //         isUsercertification: false
+        //     }
         case USER_LOGIN_REQUEST:
             return {
                 ...state,

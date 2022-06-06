@@ -169,9 +169,9 @@ export const resetErrorSuccess = () => (dispatch) => {
   dispatch({ type: USER_ERROR_SUCCESS_RESET })
 }
 
-export const resetcertificationNumberCheck = () => (dispatch) => {
-  dispatch({ type: USER_RESET_CERTIFICATION_NUMBER_CHECK })
-}
+// export const resetcertificationNumberCheck = () => (dispatch) => {
+//   dispatch({ type: USER_RESET_CERTIFICATION_NUMBER_CHECK })
+// }
 
 export const loginCheck = () => (dispatch) => {
   dispatch({ type: USER_LOGIN_CHECK })

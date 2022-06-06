@@ -185,13 +185,3 @@ function Vote() {
   );
 }
 export default Vote;
-
-{
-  /* <Grid container spacing={3} className="info_container">
-                      {candidateContent.map((c) => (
-						            <Grid item xs={3}>
-                          {candidateContent.name}
-						            </Grid>
-					            ))}
-                    </Grid> */
-}
