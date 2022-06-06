@@ -51,10 +51,8 @@ export const usersendmail= (email) => async (dispatch) => {
       body:JSON.stringify({email})
     }
 
-    // const res = await fetch(`https://uosvote.tk/auth/authMail`, config)
-    const res = await fetch(`http://localhost:3001/auth/authMail`, config);
+    const res = await fetch(`https://uosvote.tk/auth/authMail`, config)
     const data = await res.json();
-    console.log("data: ", data.authNum);
 
     if(res.status === 201) {
       alert("인증 번호를 전송했습니다.");
@@ -89,15 +87,14 @@ export const usercertification = (submittednumber) => async (dispatch) => {
       method:'POST',
       headers:{
         'Content-Type': 'application/json',
-        Accept: "application/json",        
+        Accept: "application/json",
       },
       body:JSON.stringify(submittednumber)
     }
     
     console.log("submittednumber: ", submittednumber);
 
-    // const res = await fetch(`https://localhost:3001/auth/validateMail`, config)
-    const res = await fetch(`http://localhost:3001/auth/validateMail`, config)
+    const res = await fetch(`https://uosvote.tk/auth/validateMail`, config)
 
     if(res.status === 201) {
       alert("사용자 인증에 성공했습니다");
@@ -178,9 +175,9 @@ export const resetErrorSuccess = () => (dispatch) => {
   dispatch({ type: USER_ERROR_SUCCESS_RESET })
 }
 
-export const resetcertificationNumberCheck = () => (dispatch) => {
-  dispatch({ type: USER_RESET_CERTIFICATION_NUMBER_CHECK })
-}
+// export const resetcertificationNumberCheck = () => (dispatch) => {
+//   dispatch({ type: USER_RESET_CERTIFICATION_NUMBER_CHECK })
+// }
 
 export const loginCheck = () => (dispatch) => {
   dispatch({ type: USER_LOGIN_CHECK })

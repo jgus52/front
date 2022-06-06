@@ -1,28 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
-import { myhash, allhash } from "../../store/actions/hashlistActions";
+import { myhash, allhash, sumhash } from "../../store/actions/hashlistActions";
+import { useParams } from "react-router-dom";
+import { electioncheck } from "../../store/actions/electionActions";
+import { loginCheck } from "../../store/actions/userActions";
 import './VoteVerification.scss'
 
 const VoteVerification = () => {
 
-    const { myhashloading, myhashlist, allhashloading, allhashlist} = useSelector(state=>state.hashlist)
+    const { isLogin } = useSelector(state=>state.user)
+    const { iselection } = useSelector((state) => state.election);
+    const { myhashloading, myhashlist, allhashloading, allhashlist, sumhashloading, sumhashlist} = useSelector(state=>state.hashlist)
+    const [sumstate, setsumState] = useState(false)
+    const [mystate, setmyState] = useState(false)
     const dispatch = useDispatch()
+    const {id} = useParams();
+
+    if(!isLogin){
+        if(localStorage.getItem("accessToken")!==null){
+            dispatch(loginCheck())
+        }
+    }
+
+    if (!iselection) {
+        dispatch(electioncheck());
+    }
 
     useEffect(()=>{
+        if(!sumhashloading){
+            dispatch(sumhash(id))
+        }
+
         if(!myhashloading){
-            dispatch(myhash())
+            dispatch(myhash(id))
         }
 
         if(!allhashloading){
-            dispatch(allhash())
+            dispatch(allhash(id))
         }
         
     },[])
 
-    const testhashlist = [
-        {id:1, hashsite: "QmdQvg3uDjj13HcGY5stjqYfQu31FFpRBTKYsmYAFtcAj7", hash: "QmTDfwTbTkq8k36wPcpAaJWKgUkdmfUF" },
-    ]
+    useEffect(()=>{
+        if(typeof sumhashlist.result != "undefined"){
+            setsumState(true);
+        }
+        if(typeof myhashlist.ballotHash != "undefined"){
+            setmyState (true);
+        }
+    }) 
+    console.log("1." + sumstate);
 
     return (
         <>
@@ -34,14 +62,19 @@ const VoteVerification = () => {
                             <span>동형 알고리즘(HEAAN)</span>
                         </Link> 
                         을 이용하여 합산한 암호문 입니다.)</p>
-                    <p className="hash-info">해쉬 정보 미리보기</p>
                 </div>  
                 <div className="hash-list">
                     <div className="hash-list-components">
-                        <a target="_blank" href={`https://gateway.pinata.cloud/ipfs/${testhashlist[0].hashsite}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
-                            <span className="hash-site">{testhashlist[0].hashsite}</span>
-                        </a>
-                        <span className="hash">{testhashlist[0].hash}</span>
+                        {!sumstate&&(
+                            <div className="hash-site">
+                                <p>해당 해쉬 생성을 기다리는 중 입니다.</p>
+                            </div>
+                        )}
+                        {sumstate&&(
+                            <a className="hash-site" target="_blank" href={`https://gateway.pinata.cloud/ipfs/${sumhashlist.result}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
+                                <span >https://gateway.pinata.cloud/ipfs/{sumhashlist.result}</span>
+                            </a>
+                        )}
                     </div>
                 </div>
             </div>
@@ -49,11 +82,19 @@ const VoteVerification = () => {
             <div>
                 <div className="hash-list-title">
                     <p className="hash-site-name2">사용자가 투표한 해쉬 주소</p>
-                    <p className="hash-info2">해쉬 정보 미리보기</p>
                 </div>  
                 <div className="hash-list">
                     <div className="hash-list-components">
-                        <span className="hash-site">{myhashlist.ballotHash}</span>
+                        {!mystate&&(
+                            <div className="hash-site">
+                               <p>해당 해쉬 생성을 기다리는 중 입니다.</p>
+                            </div>
+                        )}
+                        {mystate&&(
+                            <a className="hash-site" target="_blank" href={`https://gateway.pinata.cloud/ipfs/${myhashlist.ballotHash}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
+                                <span >https://gateway.pinata.cloud/ipfs/{myhashlist.ballotHash}</span>
+                            </a>
+                        )}
                     </div>
                 </div>
             </div>
@@ -61,7 +102,6 @@ const VoteVerification = () => {
             <div>
                 <div className="hash-list-title">
                     <p className="hash-site-name2">전체 투표 해쉬 주소</p>
-                    <p className="hash-info2">해쉬 정보 미리보기</p>
                 </div>  
                 <div className="hash-list">
                     {
@@ -69,8 +109,11 @@ const VoteVerification = () => {
                             return (
                                 <div key={index}>
                                     <div className="hash-list-components">
-                                        <span className="hash-site">{allhashlist.ElectionId}</span>
-                                        <span className="hash">{allhashlist.BallotHash}</span>
+                                    
+                                        <a className="hash-site" target="_blank" href={`https://gateway.pinata.cloud/ipfs/${allhashlist.BallotHash}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
+                                            <span>https://gateway.pinata.cloud/ipfs/{allhashlist.BallotHash}</span>
+                                        </a>
+                                    
                                     </div>
                                 </div>
                             )

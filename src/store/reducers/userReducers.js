@@ -6,7 +6,7 @@ const initialState = {
     error: null,
     isLogin: false,
     isUsercertification: false,
-    authNum:[]
+    authNum:[],
 }
 
 const userReducer = (state = initialState, action) => {
@@ -44,7 +44,7 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 success: action.success,
-                authNum: action.data,
+                authNum:action.data,
                 error: null,
             }
         case USER_SENDMAIL_FAIL:
@@ -82,11 +82,11 @@ const userReducer = (state = initialState, action) => {
                 success: null,
                 error: null
             }
-        case USER_RESET_CERTIFICATION_NUMBER_CHECK:
-            return {
-                ...state,
-                isUsercertification: false
-            }
+        // case USER_RESET_CERTIFICATION_NUMBER_CHECK:
+        //     return {
+        //         ...state,
+        //         isUsercertification: false
+        //     }
         case USER_LOGIN_REQUEST:
             return {
                 ...state,
