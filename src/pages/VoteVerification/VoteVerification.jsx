@@ -13,7 +13,6 @@ const VoteVerification = () => {
     const { iselection } = useSelector((state) => state.election);
     const { myhashloading, myhashlist, allhashloading, allhashlist, sumhashloading, sumhashlist} = useSelector(state=>state.hashlist)
     const [sumstate, setsumState] = useState(false)
-    //const [sumstate2, setsumState2] = useState(false)
     const [mystate, setmyState] = useState(false)
     const dispatch = useDispatch()
     const {id} = useParams();
@@ -52,7 +51,6 @@ const VoteVerification = () => {
         }
     }) 
     console.log("1." + sumstate);
-    // console.log("2." + sumstate2);
 
     return (
         <>
