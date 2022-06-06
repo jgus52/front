@@ -111,11 +111,16 @@ function Voteinfo() {
     if (canVote == "after") {
       let top = 0;
       let color;
+      console.log("max");
+      for (let i = 0; i < result.length; i++) {
+        if (top <= Math.round(result[i])) {
+          top = Math.round(result[i]);
+        }
+      }
       for (let i = 0; i < result.length; i++) {
         console.log((Math.round(result[i]) / myelection.total) * 100);
         color = "#06287f";
         if (top <= Math.round(result[i])) {
-          top = Math.round(result[i]);
           color = "#D50000";
         }
         voteResultContent.push(
