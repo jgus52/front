@@ -19,23 +19,27 @@ const Signup = ({history}) => {
     const [formError, setFormError] = useState('')
     const [modalOpen, setModalOpen] = useState('close')
 
-    const { loading, success, error, } = useSelector(state=>state.user)
+    const { loading, success, error, authNum } = useSelector(state=>state.user)
 
     const dispatch = useDispatch()
 
-    // const sendemail= () => {
-    //    dispatch(usersendmail(email));
-    // }
+    const sendemail= () => {
+       dispatch(usersendmail(email));
+    }
 
     var CryptoJS = require("crypto-js");
+
+
     
     const certification = (certificationNumber) => {
-
-        const ciphernum = CryptoJS.AES.encrypt(certificationNumber, 'secret key 123').toString();
-        console.log(ciphernum);
+        console.log("certificationNumber: ", certificationNumber);
+        const ciphernum = CryptoJS.AES.encrypt(certificationNumber, 'SECRETKEY').toString();
+        console.log("ciphernum: ", ciphernum);
+        console.log("authNum: ", authNum);
 
         const submittednumber= {
-            number: ciphernum 
+            code: ciphernum,
+            authNumHash: authNum,
         }
 
         dispatch(usercertification(submittednumber));
@@ -143,8 +147,7 @@ const Signup = ({history}) => {
                                 spellCheck={false}
                                 onChange={(e)=>setEmail(e.target.value)}
                             />
-                            <Button text="인증 번호 전송" size="16px" color="#ffffff" //onClick={sendemail}/>
-                            />
+                            <Button text="인증 번호 전송" size="16px" color="#ffffff" onClick={sendemail}/>
                         </div>
 
                         <p className="id-password-desc">인증번호</p>
