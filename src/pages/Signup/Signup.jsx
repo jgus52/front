@@ -38,10 +38,6 @@ const Signup = ({history}) => {
 
     
     const certification = (certificationNumber) => {
-        if(isUsercertification) {
-            alert("이미 사용자 인증을 완료하였습니다.");
-        }
-        else{
             const ciphernum = CryptoJS.AES.encrypt(certificationNumber, 'secret key 123').toString();
             console.log(ciphernum);
 
@@ -50,7 +46,6 @@ const Signup = ({history}) => {
                 authNumHash: authNum
             }
             dispatch(usercertification(submittednumber));
-        }
     }
 
     const handleNumberInputChange = (e) => {
@@ -70,10 +65,10 @@ const Signup = ({history}) => {
             setFormError("올바른 이메일 형식이 아닙니다")
             return
         }
-        if(!isUsercertification) {
-            setFormError("사용자 인증을 하지 않으셨습니다.")
-            return
-          }
+        // if(!isUsercertification) {
+        //     setFormError("사용자 인증을 하지 않으셨습니다.")
+        //     return
+        // }
         if(!checkPasswordValidation(password)){
           setFormError("비밀번호는 숫자, 영어, 특수문자를. 포함하며 8자 이상이어야 합니다")
           return
@@ -166,7 +161,7 @@ const Signup = ({history}) => {
                                 value={certificationNumber}
                                 spellCheck={false}
                                 onChange={handleNumberInputChange}
-                                readOnly={isUsercertification ? true : false}
+                                // readOnly={isUsercertification ? true : false}
                             />
                             <Button text="확인" size="16px" color="#ffffff" onClick={()=>certification(certificationNumber)}/>
                             <Button text="재전송" size="16px" color="#ffffff" onClick={sendemail}/>

@@ -134,8 +134,7 @@ export const login = (submittedUserData) => async (dispatch) => {
       body:JSON.stringify(submittedUserData)
     }
 
-    // const res = await fetch(`https://uosvote.tk/auth/login`, config)
-    const res = await fetch(`http://localhost:3001/auth/login`, config)
+    const res = await fetch(`https://uosvote.tk/auth/login`, config)
     const data = await res.json();
 
     if (data.accessToken !== null&&data.accessToken !== undefined) {
@@ -147,15 +146,10 @@ export const login = (submittedUserData) => async (dispatch) => {
       dispatch({
         type: USER_LOGIN_SUCCESS,
       })
-    } else if (res.status === 404){
-      dispatch({
-        type: USER_LOGIN_FAIL,
-        error: "존재하지 않는 사용자입니다." 
-      })
     } else if (res.status === 401){
       dispatch({
         type: USER_LOGIN_FAIL,
-        error: "비밀번호가 일치하지 않습니다. "
+        error: "이메일 또는 비밀번호가 일치하지 않습니다." 
       })
     } else {
       throw new Error()
