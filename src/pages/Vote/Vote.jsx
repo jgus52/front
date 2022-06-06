@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import Moment from "moment";
 import { loginCheck } from "../../store/actions/userActions";
+import { myhash } from "../../store/actions/hashlistActions";
 import {
   myelectioninfo,
   electioncheck,
@@ -25,6 +26,7 @@ function Vote() {
   const { myelectionloading, myelection, iselection } = useSelector(
     (state) => state.election
   );
+  const { myhashloading, myhashlist } = useSelector((state) => state.hashlist);
   let candidateContent = [];
 
   const openModal3 = () => {
@@ -44,11 +46,20 @@ function Vote() {
     dispatch(electioncheck());
   }
 
-  useEffect(() => {
+  useEffect(async () => {
     if (!myelectionloading) {
       dispatch(myelectioninfo(id));
     }
+    if (!myhashloading) {
+      dispatch(myhash(id));
+    }
   }, []);
+
+  useEffect(() => {
+    if (typeof myhashlist.ballotHash != "undefined") {
+      setSubmit(true);
+    }
+  }, [myhashlist]);
 
   const handleModal3Click = () => {
     console.log("modal3");
@@ -110,6 +121,7 @@ function Vote() {
       }),
     });
     console.log(res);
+    await dispatch(myhash(id));
     history.goBack(0);
   };
 
@@ -187,13 +199,3 @@ function Vote() {
   );
 }
 export default Vote;
-
-{
-  /* <Grid container spacing={3} className="info_container">
-                      {candidateContent.map((c) => (
-                        <Grid item xs={3}>
-                          {candidateContent.name}
-                        </Grid>
-                      ))}
-                    </Grid> */
-}

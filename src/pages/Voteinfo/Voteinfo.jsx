@@ -43,7 +43,9 @@ function Voteinfo() {
     if (!myelectionloading) {
       dispatch(myelectioninfo(id));
     }
-    dispatch(myhash(id));
+    if (!myhashloading) {
+      dispatch(myhash(id));
+    }
   }, []);
   useEffect(() => {
     fullRange = new Date(myelection.endDate) - new Date(myelection.startDate);
@@ -81,29 +83,6 @@ function Voteinfo() {
       }
     }
   }, [canVote]);
-  /*
-  useEffect(() => {
-    console.log("result");
-    for (let i = 0; i < result.length; i++) {
-      voteResultContent.push(
-        <div key={i}>
-          <div className="candidate-name">
-            {myelection.candidates[i].candidateNumber +
-              ". " +
-              myelection.candidates[i].candidateName}
-          </div>
-          <img
-            className="candidate-profile"
-            src={myelection.candidates[i].profile}
-            alt="프로필"
-          ></img>
-          <div className="candidate-promise">{Math.round(result[i])}</div>
-          <div className="space"></div>
-        </div>
-      );
-    }
-  }, [result]);
-*/
   console.log(myelection);
 
   if (typeof myelection.id != "undefined" && myelection.id == id) {
@@ -181,7 +160,7 @@ function Voteinfo() {
         <>
           <div className="name-range">
             <div className="name">
-              <div className="title">{canVote}</div>
+              <div className="title">투표명</div>
               <div className="border"></div>
               <div className="info"> {myelection.name} </div>
             </div>
