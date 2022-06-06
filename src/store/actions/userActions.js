@@ -51,7 +51,7 @@ export const usersendmail= (email) => async (dispatch) => {
       body:JSON.stringify({email})
     }
 
-    const res = await fetch(`https://uosvote.tk/auth/sendmail`, config)
+    const res = await fetch(`https://uosvote.tk/auth/authMail`, config)
     const data = await res.json();
 
     if(res.status === 201) {
@@ -91,7 +91,7 @@ export const usercertification = (submittednumber) => async (dispatch) => {
       body:JSON.stringify(submittednumber)
     }
 
-    const res = await fetch(`https://uosvote.tk/auth/certification`, config)
+    const res = await fetch(`https://uosvote.tk/auth/validateMail`, config)
 
     if(res.status === 201) {
       dispatch({
@@ -169,9 +169,9 @@ export const resetErrorSuccess = () => (dispatch) => {
   dispatch({ type: USER_ERROR_SUCCESS_RESET })
 }
 
-export const resetcertificationNumberCheck = () => (dispatch) => {
-  dispatch({ type: USER_RESET_CERTIFICATION_NUMBER_CHECK })
-}
+// export const resetcertificationNumberCheck = () => (dispatch) => {
+//   dispatch({ type: USER_RESET_CERTIFICATION_NUMBER_CHECK })
+// }
 
 export const loginCheck = () => (dispatch) => {
   dispatch({ type: USER_LOGIN_CHECK })

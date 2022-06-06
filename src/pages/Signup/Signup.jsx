@@ -4,7 +4,7 @@ import Block from '../../components/Block/Block'
 import Button from "../../components/Button/Button";
 import Modal from "../../components/Modal/Modal";
 import { checkEmailValidation, checkPasswordValidation, checkStudentIDValidation } from '../../utils/authUtils'
-import { signup, resetErrorSuccess, usercertification, usersendmail, resetcertificationNumberCheck } from "../../store/actions/userActions";
+import { signup, resetErrorSuccess, usercertification, usersendmail } from "../../store/actions/userActions";
 import crypto from 'crypto-js';
 import './Signup.scss'
 
@@ -16,35 +16,47 @@ const Signup = ({history}) => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setconfirmPassword] = useState('')
     const [certificationNumber, setcertificationNumber] = useState('')
+    const [issave, setissave] = useState(false)
     const [formError, setFormError] = useState('')
     const [modalOpen, setModalOpen] = useState('close')
 
-    const { loading, success, error, authNum } = useSelector(state=>state.user)
+    const { loading, success, error, authNum, isUsercertification} = useSelector(state=>state.user)
 
     const dispatch = useDispatch()
 
     const sendemail= () => {
-       dispatch(usersendmail(email));
+        if(!checkEmailValidation(email)) {
+            alert("올바른 이메일 형식이 아닙니다");
+        }
+        else{
+            dispatch(usersendmail(email));
+        }
     }
+
 
     var CryptoJS = require("crypto-js");
     
     const certification = (certificationNumber) => {
 
-        const ciphernum = CryptoJS.AES.encrypt(certificationNumber, 'secret key 123').toString();
-        console.log(ciphernum);
-
-        const submittednumber= {
-            number: ciphernum,
-            authNum: authNum
+        if(isUsercertification) {
+            alert("이미 사용자 인증을 완료하였습니다.");
         }
+        else{
+            const ciphernum = CryptoJS.AES.encrypt(certificationNumber, 'secret key 123').toString();
+            console.log(ciphernum);
 
-        dispatch(usercertification(submittednumber));
+            const submittednumber= {
+                number: ciphernum,
+                authNum: authNum
+            }
+            dispatch(usercertification(submittednumber));
+        }
+        setissave(true);
     }
 
     const handleNumberInputChange = (e) => {
         setcertificationNumber(e.target.value)
-        dispatch(resetcertificationNumberCheck())
+        //dispatch(resetcertificationNumberCheck())
     }
 
     const handleSubmit = async (e) => {
@@ -59,7 +71,7 @@ const Signup = ({history}) => {
             setFormError("올바른 이메일 형식이 아닙니다")
             return
         }
-        if(!usercertification) {
+        if(!isUsercertification) {
             setFormError("사용자 인증을 하지 않으셨습니다.")
             return
           }
@@ -143,9 +155,10 @@ const Signup = ({history}) => {
                                 value={email}
                                 spellCheck={false}
                                 onChange={(e)=>setEmail(e.target.value)}
+                                //readOnly={isUsercertification ? true : false}
+                                readOnly={issave ? true : false}
                             />
                             <Button text="인증 번호 전송" size="16px" color="#ffffff" onClick={sendemail}/>
-                            />
                         </div>
 
                         <p className="id-password-desc">인증번호</p>
@@ -155,6 +168,8 @@ const Signup = ({history}) => {
                                 value={certificationNumber}
                                 spellCheck={false}
                                 onChange={handleNumberInputChange}
+                                //readOnly={isUsercertification ? true : false}
+                                readOnly={issave ? true : false}
                             />
                             <Button text="확인" size="16px" color="#ffffff" onClick={()=>certification(certificationNumber)}/>
                             <Button text="재전송" size="16px" color="#ffffff" onClick={sendemail}/>

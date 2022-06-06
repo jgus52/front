@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { myhash, allhash, sumhash } from "../../store/actions/hashlistActions";
@@ -12,6 +12,8 @@ const VoteVerification = () => {
     const { isLogin } = useSelector(state=>state.user)
     const { iselection } = useSelector((state) => state.election);
     const { myhashloading, myhashlist, allhashloading, allhashlist, sumhashloading, sumhashlist} = useSelector(state=>state.hashlist)
+    const [sumstate, setsumState] = useState(false)
+    const [mystate, setmyState] = useState(false)
     const dispatch = useDispatch()
     const {id} = useParams();
 
@@ -40,6 +42,16 @@ const VoteVerification = () => {
         
     },[])
 
+    useEffect(()=>{
+        if(typeof sumhashlist.result != "undefined"){
+            setsumState(true);
+        }
+        if(typeof myhashlist.ballotHash != "undefined"){
+            setmyState (true);
+        }
+    }) 
+    console.log("1." + sumstate);
+
     return (
         <>
             <div>
@@ -53,9 +65,16 @@ const VoteVerification = () => {
                 </div>  
                 <div className="hash-list">
                     <div className="hash-list-components">
-                        <a className="hash-site" target="_blank" href={`https://gateway.pinata.cloud/ipfs/${sumhashlist.result}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
-                            <span >https://gateway.pinata.cloud/ipfs/{sumhashlist.result}</span>
-                        </a>
+                        {!sumstate&&(
+                            <div className="hash-site">
+                                <p>해당 해쉬 생성을 기다리는 중 입니다.</p>
+                            </div>
+                        )}
+                        {sumstate&&(
+                            <a className="hash-site" target="_blank" href={`https://gateway.pinata.cloud/ipfs/${sumhashlist.result}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
+                                <span >https://gateway.pinata.cloud/ipfs/{sumhashlist.result}</span>
+                            </a>
+                        )}
                     </div>
                 </div>
             </div>
@@ -66,9 +85,16 @@ const VoteVerification = () => {
                 </div>  
                 <div className="hash-list">
                     <div className="hash-list-components">
-                        <a className="hash-site" target="_blank" href={`https://gateway.pinata.cloud/ipfs/${myhashlist.ballotHash}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
-                            <span >https://gateway.pinata.cloud/ipfs/{myhashlist.ballotHash}</span>
-                        </a>
+                        {!mystate&&(
+                            <div className="hash-site">
+                               <p>해당 해쉬 생성을 기다리는 중 입니다.</p>
+                            </div>
+                        )}
+                        {mystate&&(
+                            <a className="hash-site" target="_blank" href={`https://gateway.pinata.cloud/ipfs/${myhashlist.ballotHash}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
+                                <span >https://gateway.pinata.cloud/ipfs/{myhashlist.ballotHash}</span>
+                            </a>
+                        )}
                     </div>
                 </div>
             </div>
@@ -83,9 +109,11 @@ const VoteVerification = () => {
                             return (
                                 <div key={index}>
                                     <div className="hash-list-components">
+                                    
                                         <a className="hash-site" target="_blank" href={`https://gateway.pinata.cloud/ipfs/${allhashlist.BallotHash}`} style={{ textDecoration: 'none',  color: 'inherit'}}>
                                             <span>https://gateway.pinata.cloud/ipfs/{allhashlist.BallotHash}</span>
                                         </a>
+                                    
                                     </div>
                                 </div>
                             )
