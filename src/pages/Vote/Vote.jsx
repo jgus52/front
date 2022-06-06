@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import Moment from "moment";
 import { loginCheck } from "../../store/actions/userActions";
+import { myhash } from "../../store/actions/hashlistActions";
 import {
   myelectioninfo,
   electioncheck,
@@ -19,11 +20,13 @@ function Vote() {
   const [selected, setSelected] = useState(-1);
   const [modal3Visible, setModal3Visible] = useState(false);
   const [agree, setAgree] = useState(false);
+  const [submit, setSubmit] = useState(false);
 
   const { isLogin } = useSelector((state) => state.user);
   const { myelectionloading, myelection, iselection } = useSelector(
     (state) => state.election
   );
+  const { myhashloading, myhashlist } = useSelector((state) => state.hashlist);
   let candidateContent = [];
 
   const openModal3 = () => {
@@ -43,11 +46,20 @@ function Vote() {
     dispatch(electioncheck());
   }
 
-  useEffect(() => {
+  useEffect(async () => {
     if (!myelectionloading) {
       dispatch(myelectioninfo(id));
     }
+    if (!myhashloading) {
+      dispatch(myhash(id));
+    }
   }, []);
+
+  useEffect(() => {
+    if (typeof myhashlist.ballotHash != "undefined") {
+      setSubmit(true);
+    }
+  }, [myhashlist]);
 
   const handleModal3Click = () => {
     console.log("modal3");
@@ -94,9 +106,10 @@ function Vote() {
     }
   }
 
-  const handlesubmit = (e) => {
+  const handlesubmit = async (e) => {
     e.preventDefault();
-    fetch("https://uosvote.tk/election/" + id, {
+    setSubmit(true);
+    const res = await fetch("https://uosvote.tk/election/" + id, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -104,15 +117,12 @@ function Vote() {
         authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
       body: JSON.stringify({
-        selected: selected,
+        selected: parseInt(selected + 1),
       }),
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response);
-      });
-    history.goBack();
-    console.log("lala");
+    });
+    console.log(res);
+    await dispatch(myhash(id));
+    history.goBack(0);
   };
 
   return (
@@ -126,8 +136,12 @@ function Vote() {
             <p>해당 정보를 블록체인에서 불러오고 있습니다.</p>
           </div>
         )}
-
-        {myelection.id == id && (
+        {submit && (
+          <div className="election-list-none">
+            투표 정보를 블록체인에 등록하고 있습니다. 잠시만 기다려 주세요
+          </div>
+        )}
+        {myelection.id == id && submit == false && (
           <>
             <div className="name-range">
               <div className="name">
@@ -154,7 +168,7 @@ function Vote() {
                   type="checkbox"
                   required
                   checked={agree}
-                  onClick={(event) => {
+                  onChange={(event) => {
                     setAgree(!agree);
                   }}
                 ></input>

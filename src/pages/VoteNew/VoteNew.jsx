@@ -50,7 +50,6 @@ const VoteNew = ({ history }) => {
       <div key={candidates[i].number}>
         <div className="candidate-name">
           {candidates[i].number + ". " + candidates[i].candidateName}
-          <button></button>
         </div>
         <img
           className="candidate-profile"
@@ -78,18 +77,10 @@ const VoteNew = ({ history }) => {
       setModalMsg("시작 날짜보다 이전의 종료 날짜는 선택할 수 없습니다.");
       openModal();
       return;
-    } else if (total < quorum) {
+    } else if (parseInt(total) < parseInt(quorum)) {
+      console.log(total);
+      console.log(quorum);
       setModalMsg("전체 인원보다 적은 정족수를 설정해 주세요.");
-      openModal();
-      return;
-    }
-
-    var fullRange = new Date(endTime) - new Date(startTime);
-    var nowRange = new Date() - new Date(startTime);
-    if (nowRange < 0) {
-      openModal();
-      return;
-    } else if (fullRange < 0) {
       openModal();
       return;
     }
