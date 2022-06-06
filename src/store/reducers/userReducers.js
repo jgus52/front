@@ -46,6 +46,7 @@ const userReducer = (state = initialState, action) => {
                 loading: false,
                 success: action.success,
                 authNum:action.data,
+                issendmail: true,
                 error: null,
             }
         case USER_SENDMAIL_FAIL:
