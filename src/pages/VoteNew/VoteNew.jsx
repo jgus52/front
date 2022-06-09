@@ -85,7 +85,7 @@ const VoteNew = ({ history }) => {
       return;
     }
 
-    fetch("https://uosvote.tk/election/", {
+    const res = fetch("https://uosvote.tk/election/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -103,14 +103,17 @@ const VoteNew = ({ history }) => {
         },
         candidates: candidates,
       }),
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response);
-        if (response.token) {
-          localStorage.setItem("wtw-token", response.token);
-        }
-      });
+    });
+    const data = await res.json();
+    console.log("data");
+    console.log(data);
+
+    fs.mkdirSync(`election/electionID-${data.id}`);
+    fs.writeFileSync(
+      `election/electionID-${data.id}/ENCRYPTION`,
+      data.encryption
+    );
+
     history.push("/");
   };
   const handleModal2Click = (_name, _file, _info) => {

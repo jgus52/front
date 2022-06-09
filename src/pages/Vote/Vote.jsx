@@ -4,6 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 import Moment from "moment";
 import { loginCheck } from "../../store/actions/userActions";
 import { myhash } from "../../store/actions/hashlistActions";
+import SEAL from "node-seal";
 import {
   myelectioninfo,
   electioncheck,
@@ -21,7 +22,7 @@ function Vote() {
   const [modal3Visible, setModal3Visible] = useState(false);
   const [agree, setAgree] = useState(false);
   const [submit, setSubmit] = useState(false);
-
+  const SEAL = require("node-seal");
   const { isLogin } = useSelector((state) => state.user);
   const { myelectionloading, myelection, iselection } = useSelector(
     (state) => state.election
@@ -109,6 +110,48 @@ function Vote() {
   const handlesubmit = async (e) => {
     e.preventDefault();
     setSubmit(true);
+    const seal = await SEAL();
+    const schemeType = seal.SchemeType.bfv;
+    const securityLevel = seal.SecurityLevel.tc128;
+    const polyModulusDegree = 4096;
+    const bitSizes = [36, 36, 37];
+    const bitSize = 20;
+    const parms = seal.EncryptionParameters(schemeType);
+
+    parms.setPolyModulusDegree(polyModulusDegree);
+
+    // Create a suitable set of CoeffModulus primes
+    parms.setCoeffModulus(
+      seal.CoeffModulus.Create(polyModulusDegree, Int32Array.from(bitSizes))
+    );
+
+    // Set the PlainModulus to a prime of bitSize 20.
+    parms.setPlainModulus(
+      seal.PlainModulus.Batching(polyModulusDegree, bitSize)
+    );
+
+    const context = seal.Context(
+      parms, // Encryption Parameters
+      true, // ExpandModChain
+      securityLevel // Enforce a security level
+    );
+
+    const savedPK = fs
+      .readFileSync(`election/electionID-${id}/ENCRYPTION.txt`)
+      .toString();
+
+    const publicKey = seal.PublicKey();
+    publicKey.load(context, savedPK);
+    const encryptor = seal.Encryptor(context, publicKey);
+    const encoder = seal.BatchEncoder(context);
+
+    const arr = new Int32Array(4096);
+    arr[selected] = 1;
+    const plainText = seal.PlainText();
+    encoder.encode(arr, plainText);
+    const cipherText = seal.CipherText();
+    encryptor.encrypt(plainText, cipherText);
+    const ballot = cipherText.save();
     const res = await fetch("https://uosvote.tk/election/" + id, {
       method: "POST",
       headers: {
@@ -117,7 +160,7 @@ function Vote() {
         authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
       body: JSON.stringify({
-        selected: parseInt(selected + 1),
+        ballot: ballot,
       }),
     });
     console.log(res);
