@@ -4,7 +4,6 @@ import { useParams, useHistory } from "react-router-dom";
 import Moment from "moment";
 import { loginCheck } from "../../store/actions/userActions";
 import { myhash } from "../../store/actions/hashlistActions";
-import SEAL from "node-seal";
 import {
   myelectioninfo,
   electioncheck,
@@ -136,12 +135,26 @@ function Vote() {
       securityLevel // Enforce a security level
     );
 
-    const savedPK = fs
-      .readFileSync(`election/electionID-${id}/ENCRYPTION.txt`)
-      .toString();
+    const keyRes = await fetch(
+      "https://uosvote.tk/election/encryptionKey/" + id,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("accessToken"),
+        },
+      }
+    );
+
+    console.log(keyRes);
+
+    const savedPK = await keyRes.json();
+
+    console.log(savedPK.savedPK);
 
     const publicKey = seal.PublicKey();
-    publicKey.load(context, savedPK);
+    publicKey.load(context, savedPK.savedPK);
     const encryptor = seal.Encryptor(context, publicKey);
     const encoder = seal.BatchEncoder(context);
 

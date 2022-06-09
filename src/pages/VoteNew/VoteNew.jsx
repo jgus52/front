@@ -84,8 +84,7 @@ const VoteNew = ({ history }) => {
       openModal();
       return;
     }
-
-    const res = fetch("https://uosvote.tk/election/", {
+    const res = await fetch("https://uosvote.tk/election/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -107,13 +106,6 @@ const VoteNew = ({ history }) => {
     const data = await res.json();
     console.log("data");
     console.log(data);
-
-    fs.mkdirSync(`election/electionID-${data.id}`);
-    fs.writeFileSync(
-      `election/electionID-${data.id}/ENCRYPTION`,
-      data.encryption
-    );
-
     history.push("/");
   };
   const handleModal2Click = (_name, _file, _info) => {
@@ -272,7 +264,7 @@ const VoteNew = ({ history }) => {
                 type="checkbox"
                 required
                 checked={agree}
-                onClick={(event) => {
+                onChange={(event) => {
                   setAgree(!agree);
                 }}
               ></input>
