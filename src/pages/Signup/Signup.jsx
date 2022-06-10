@@ -5,7 +5,6 @@ import Button from "../../components/Button/Button";
 import Modal from "../../components/Modal/Modal";
 import { checkEmailValidation, checkPasswordValidation, checkStudentIDValidation } from '../../utils/authUtils'
 import { signup, resetErrorSuccess, usercertification, usersendmail } from "../../store/actions/userActions";
-import crypto from 'crypto-js';
 import './Signup.scss'
 
 const Signup = ({history}) => {
@@ -20,13 +19,15 @@ const Signup = ({history}) => {
     const [modalOpen, setModalOpen] = useState('close')
 
 
-    const { loading, success, error, authNum, isUsercertification, issendmail} = useSelector(state=>state.user)
+    const { loading, success, error, authNum, isUsercheck, issendmail} = useSelector(state=>state.user)
 
     const dispatch = useDispatch()
 
     const sendemail= () => {
+        setModalOpen('open')
         if(!checkEmailValidation(email)) {
-            alert("올바른 이메일 형식이 아닙니다");
+            setFormError("올바른 이메일 형식이 아닙니다")
+            return
         }
         else{
             dispatch(usersendmail(email));
@@ -35,28 +36,31 @@ const Signup = ({history}) => {
 
     var CryptoJS = require("crypto-js");
 
+    const certification = () => {
+        setModalOpen('open')
 
-    
-    const certification = (certificationNumber) => {
+        if(certificationNumber.length == 0){
+            setFormError("인증번호를 입력하지 않았습니다. ")
+            return
+        }
+        else{
             const ciphernum = CryptoJS.AES.encrypt(certificationNumber, 'secret key 123').toString();
-            console.log(ciphernum);
-
             const submittednumber= {
                 code: ciphernum,
                 authNumHash: authNum
             }
             dispatch(usercertification(submittednumber));
-    }
-
-    const handleNumberInputChange = (e) => {
-        setcertificationNumber(e.target.value)
-        //dispatch(resetcertificationNumberCheck())
+        }
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         setModalOpen('open')
+        if(username === '') {
+            setFormError("이름을 입력하지 않았습니다")
+            return
+        }
         if(!checkStudentIDValidation(studentID)) {
             setFormError("올바른 학번 형식이 아닙니다")
             return
@@ -65,10 +69,11 @@ const Signup = ({history}) => {
             setFormError("올바른 이메일 형식이 아닙니다")
             return
         }
-        // if(!isUsercertification) {
-        //     setFormError("사용자 인증을 하지 않으셨습니다.")
-        //     return
-        // }
+        console.log(isUsercheck);
+        if(!isUsercheck) {
+            setFormError("사용자 인증을 하지 않으셨습니다.")
+            return
+        }
         if(!checkPasswordValidation(password)){
           setFormError("비밀번호는 숫자, 영어, 특수문자를. 포함하며 8자 이상이어야 합니다")
           return
@@ -160,10 +165,10 @@ const Signup = ({history}) => {
                                 type="text"
                                 value={certificationNumber}
                                 spellCheck={false}
-                                onChange={handleNumberInputChange}
-                                // readOnly={isUsercertification ? true : false}
+                                onChange={(e)=>setcertificationNumber(e.target.value)}
+                                readOnly={isUsercheck ? true : false}
                             />
-                            <Button text="확인" size="16px" color="#ffffff" onClick={()=>certification(certificationNumber)}/>
+                            <Button text="확인" size="16px" color="#ffffff" onClick={certification}/>
                             <Button text="재전송" size="16px" color="#ffffff" onClick={sendemail}/>
                         </div>
 

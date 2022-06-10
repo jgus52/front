@@ -1,4 +1,4 @@
-import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_ERROR_SUCCESS_RESET, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, USER_CERTIFICATION_REQUEST, USER_CERTIFICATION_SUCCESS, USER_CERTIFICATION_FAIL, USER_SENDMAIL_REQUEST, USER_SENDMAIL_SUCCESS, USER_SENDMAIL_FAIL, USER_RESET_CERTIFICATION_NUMBER_CHECK, USER_LOGIN_CHECK } from "../constants/userConstants"
+import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_ERROR_SUCCESS_RESET, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, USER_AUTHNUM_REQUEST, USER_AUTHNUM_SUCCESS, USER_AUTHNUM_FAIL, USER_SENDMAIL_REQUEST, USER_SENDMAIL_SUCCESS, USER_SENDMAIL_FAIL, USER_RESET_CERTIFICATION_NUMBER_CHECK, USER_LOGIN_CHECK } from "../constants/userConstants"
 
 export const signup = (submittedUserData) => async (dispatch) => {
     try {
@@ -16,6 +16,7 @@ export const signup = (submittedUserData) => async (dispatch) => {
       const res = await fetch(`https://uosvote.tk/auth/register`, config)
 
       if(res.status === 201) {
+        console.log("lala");
         dispatch({
           type: USER_REGISTER_SUCCESS,
           success: "회원가입에 성공하셨습니다. 축하드립니다."
@@ -55,14 +56,12 @@ export const usersendmail= (email) => async (dispatch) => {
     const data = await res.json();
 
     if(res.status === 201) {
-      alert("인증 번호를 전송했습니다.");
       dispatch({
         type: USER_SENDMAIL_SUCCESS,
         success: "인증 번호가 전송되었습니다.",
         data: data.authNum
       })
     } else if(res.status === 409){
-      alert("인증 번호 전송에 실패했습니다.");
       dispatch({
         type: USER_SENDMAIL_FAIL,
         error: "인증 번호 전송에 실패했습니다." 
@@ -81,7 +80,7 @@ export const usersendmail= (email) => async (dispatch) => {
 
 export const usercertification = (submittednumber) => async (dispatch) => {
   try {
-    dispatch({ type: USER_CERTIFICATION_REQUEST })
+    dispatch({ type: USER_AUTHNUM_REQUEST })
 
     const config = {
       method:'POST',
@@ -97,15 +96,14 @@ export const usercertification = (submittednumber) => async (dispatch) => {
     const res = await fetch(`https://uosvote.tk/auth/validateMail`, config)
 
     if(res.status === 201) {
-      alert("사용자 인증에 성공했습니다");
+      console.log('lala');
       dispatch({
-        type: USER_CERTIFICATION_SUCCESS,
-        success: "사용자 인증이 완료되었습니다"
+        type: USER_AUTHNUM_SUCCESS,
+        success: "사용자 인증이 완료되었습니다",
       })
     } else if(res.status === 409){
-      alert("사용자 인증에 실패했습니다.");
       dispatch({
-        type: USER_CERTIFICATION_FAIL,
+        type: USER_AUTHNUM_FAIL,
         error: "사용자 인증이 실패하였습니다. 입력한 내용을 다시 확인해주세요" 
       })
     } else {
@@ -114,7 +112,7 @@ export const usercertification = (submittednumber) => async (dispatch) => {
 
   } catch (err) {
     dispatch({
-        type: USER_CERTIFICATION_FAIL,
+        type: USER_AUTHNUM_FAIL,
         error: "에러가 발생했습니다. 다시 시도해주세요" 
       })
   }
